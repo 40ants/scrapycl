@@ -4,7 +4,6 @@
   (:export #:spider
            #:start
            #:url
-           #:ensure-engine-is-running
            #:process
            #:enqueue
            #:request

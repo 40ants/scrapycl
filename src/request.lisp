@@ -11,7 +11,8 @@
   ((url :initarg :url
         :type url
         :initform (error "Please, provide :URL argument.")
-        :reader request-url)))
+        :reader request-url
+        :documentation "URL to fetch data from.")))
 
 
 (defmethod print-object ((obj request) stream)

@@ -6,7 +6,6 @@
                 #:spider
                 #:start
                 #:process
-                #:ensure-engine-is-running
                 #:enqueue)
   (:import-from #:scrapycl/spider)
   (:import-from #:scrapycl/task
@@ -23,8 +22,7 @@
                 #:->)
   (:import-from #:scrapycl/request
                 #:request-url)
-  (:export
-   #:clear-queue))
+  (:export #:clear-queue))
 (in-package #:scrapycl/engine)
 
 

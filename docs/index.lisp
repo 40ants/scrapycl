@@ -49,6 +49,7 @@
                                    "40A"
                                    "API"
                                    "URL"
+                                   "SCRAPYCL/SPIDER::%SPIDER-QUEUE"
                                    "URI"
                                    "RPC"
                                    "GIT"))

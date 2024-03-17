@@ -9,8 +9,16 @@
   (:import-from #:scrapycl/request
                 #:request)
   (:import-from #:bt2
-                #:make-lock))
+                #:make-lock)
+  (:import-from #:40ants-doc/ignored-words
+                #:ignore-words-in-package))
 (in-package #:scrapycl/spider)
+
+
+(ignore-words-in-package '%spider-queue
+                         '%spider-queue-lock
+                         '%spider-thread
+                         '%initial-requests)
 
 
 (defclass spider ()
