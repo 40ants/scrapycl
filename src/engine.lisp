@@ -16,13 +16,12 @@
   (:import-from #:scrapycl/task)
   (:import-from #:log4cl-extras/error
                 #:with-log-unhandled)
-  (:import-from #:scrapycl/output
+  (:import-from #:scrapycl/core
                 #:stop-output)
   (:import-from #:serapeum
                 #:->)
   (:import-from #:scrapycl/request
-                #:request-url)
-  (:export #:clear-queue))
+                #:request-url))
 (in-package #:scrapycl/engine)
 
 

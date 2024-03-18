@@ -15,6 +15,8 @@
                 #:docs-config)
   (:import-from #:40ants-doc/autodoc
                 #:defautodoc)
+  (:import-from #:scrapycl-docs/tutorial
+                #:@tutorial)
   (:export #:@index
            #:@readme
            #:@changelog))
@@ -34,13 +36,14 @@
   
   (list :theme
         (find-symbol "40ANTS-THEME"
-                     (find-package "40ANTS-DOC-THEME-40ANTS")))
-  )
+                     (find-package "40ANTS-DOC-THEME-40ANTS"))))
 
 
 (defsection @index (:title "scrapycl - The web scraping framework for writing crawlers in Common Lisp."
                     :ignore-words ("JSON"
                                    "HTTP"
+                                   "HTML"
+                                   "CL"
                                    "TODO"
                                    "Unlicense"
                                    "REPL"
@@ -60,7 +63,7 @@
 ![Quicklisp](http://quickdocs.org/badge/scrapycl.svg)
 "
   (@installation section)
-  (@usage section)
+  (@tutorial section)
   (@api section))
 
 
@@ -77,12 +80,6 @@ You can install this library from Quicklisp, but you want to receive updates qui
 (ql:quickload :scrapycl)
 ```
 """)
-
-
-(defsection @usage (:title "Usage")
-  "
-TODO: Write a library description. Put some examples here.
-")
 
 
 (defautodoc @api (:system "scrapycl"))

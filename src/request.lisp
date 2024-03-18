@@ -1,9 +1,10 @@
 (uiop:define-package #:scrapycl/request
   (:use #:cl)
   (:import-from #:scrapycl/core
-                #:url
-                #:request)
-  (:export #:request-url))
+                #:request
+                #:request-url)
+  (:import-from #:scrapycl/types
+                #:url))
 (in-package #:scrapycl/request)
 
 

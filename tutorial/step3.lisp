@@ -11,7 +11,7 @@
 (in-package #:scrapycl/tutorial/step3)
 
 
-(defclass index-page-request (scrapycl:request)
+(defclass quotes-page-request (scrapycl:request)
   ())
 
 
@@ -19,11 +19,10 @@
   ())
 
 
-
 (defclass quotes-spider (scrapycl:spider)
   ()
   (:default-initargs
-   :initial-requests (list (make-instance 'index-page-request
+   :initial-requests (list (make-instance 'quotes-page-request
                                           :url "https://quotes.toscrape.com/"))))
 
 

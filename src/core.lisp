@@ -1,15 +1,28 @@
 (uiop:define-package #:scrapycl
   (:use #:cl)
+  (:import-from #:40ants-doc/ignored-words
+                #:ignore-words-in-package)
   (:nicknames #:scrapycl/core)
   (:export #:spider
            #:start
-           #:url
            #:process
            #:enqueue
            #:request
-           #:fetch))
+           #:fetch)
+  (:export #:url)
+  (:export #:stop-output)
+  (:export #:fetch-error
+           #:scrapycl-error)
+  (:export #:request-url
+           #:request)
+  (:export #:typed-output)
+  (:export #:json-lines
+           #:json-list
+           #:json-dict
+           #:write-as-json)
+  (:export #:preview))
 (in-package #:scrapycl)
 
 
-(deftype url ()
-  'string)
+(ignore-words-in-package 'stop-output
+                         'url)

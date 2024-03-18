@@ -1,60 +1,56 @@
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-40README-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
+(uiop:define-package #:scrapycl-docs/tutorial
+  (:use #:cl)
+  (:import-from #:40ants-doc
+                #:defsection)
+  (:import-from #:pythonic-string-reader
+                #:pythonic-string-syntax)
+  (:import-from #:named-readtables
+                #:in-readtable))
+(in-package #:scrapycl-docs/tutorial)
 
-# scrapycl - The web scraping framework for writing crawlers in Common Lisp.
+(in-readtable pythonic-string-syntax)
 
-<a id="scrapycl-asdf-system-details"></a>
 
-## SCRAPYCL ASDF System Details
+(defsection @tutorial (:title "Tutorial"
+                       :ignore-words ("CSS"
+                                      "CLOS"
+                                      "SCRAPYCL:STOP-OUTPUT"
+                                      "NEXT"
+                                      "AUTHOR-PAGE-REQUEST"
+                                      "DSL"
+                                      "AUTHOR-ITEM"
+                                      "QUOTE-ITEM"
+                                      "MERGE-WITH-URL"))
+  (@intro section)
+  (@our-first-scraper section)
+  (@extracting-data section)
+  (@extracting-quotes-and-authors section)
+  (@storing-data section)
+  (@following-links section))
 
-* Description: The web scraping framework for writing crawlers in Common Lisp.
-* Licence: Unlicense
-* Author: Alexander Artemenko <svetlyak.40wt@gmail.com>
-* Homepage: [https://40ants.com/scrapycl/][174b]
-* Bug tracker: [https://github.com/40ants/scrapycl/issues][1e8e]
-* Source control: [GIT][66a8]
-* Depends on: [40ants-doc][2c00], [alexandria][8236], [bordeaux-threads][3dbf], [closer-mop][61a4], [dexador][8347], [log4cl][7f8b], [log4cl-extras][691c], [lquery][557a], [quri][2103], [serapeum][c41d], [spinneret][8175], [str][ef7f], [yason][aba2]
 
-[![](https://github-actions.40ants.com/40ants/scrapycl/matrix.svg?only=ci.run-tests)][5d38]
-
-![](http://quickdocs.org/badge/scrapycl.svg)
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-## Installation
-
-You can install this library from Quicklisp, but you want to receive updates quickly, then install it from Ultralisp.org:
-
-```
-(ql-dist:install-dist "http://dist.ultralisp.org/"
-                      :prompt nil)
-(ql:quickload :scrapycl)
-```
-<a id="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40TUTORIAL-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-## Tutorial
-
-<a id="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40INTRO-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-### Introduction
-
+(defsection @intro (:title "Introduction")
+  """
 In this tutorial we'll train our parsing skill on this toy site: https://quotes.toscrape.com/.
-We will follow [Scrapy's tutorial][b2a5] and see if we can get all the data using Scrapy`CL`.
+We will follow [Scrapy's tutorial](https://docs.scrapy.org/en/latest/intro/tutorial.html) and see if we can get all the data using ScrapyCL.
 
 You will find whole code for this tutorial in the `tutorial/` folder.
 
-Firstly Scrapy tutorial shows us how to experiment with `HTTP` response in the `REPL`. But with Common Lisp we have much more sofisticated `REPL` out of the box. So we skip this step:
+
+Firstly Scrapy tutorial shows us how to experiment with HTTP response in the REPL. But with Common Lisp we have much more sofisticated REPL out of the box. So we skip this step:
 
 ```
 scrapy shell "https://quotes.toscrape.com/page/1/"
 ```
-Right to the Common Lisp `REPL`!
 
-<a id="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40OUR-FIRST-SCRAPER-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
+Right to the Common Lisp REPL!
+""")
 
-### Our First Scraper
 
-Scrapy`CL` is built around `CLOS`. Every scraping pipeline in this framework operates on `CLOS` objects.
-Most generic-functions accept a [`scrapycl:spider`][dcea] object as a first argument. Also, requests to `HTML` pages are typed.
+(defsection @our-first-scraper (:title "Our First Scraper")
+  """
+ScrapyCL is built around CLOS. Every scraping pipeline in this framework operates on CLOS objects.
+Most generic-functions accept a SCRAPYCL:SPIDER object as a first argument. Also, requests to HTML pages are typed.
 This way you are telling to the framework how each page should be processed.
 
 First thing we need to do is to define a class of the request to a page with quotes:
@@ -63,7 +59,9 @@ First thing we need to do is to define a class of the request to a page with quo
 CL-USER> (defclass quotes-page-request (scrapycl:request)
            ())
 #<STANDARD-CLASS COMMON-LISP-USER::QUOTES-PAGE-REQUEST>
+
 ```
+
 Next, we define a class for the spider:
 
 ```lisp
@@ -75,10 +73,12 @@ CL-USER> (defclass quotes-spider (scrapycl:spider)
                                     (make-instance 'quotes-page-request
                                                    :url "https://quotes.toscrape.com/page/2/"))))
 ```
+
 Here we tell the spider to start from two initial pages.
 
-Now it is time to make our first `HTTP` request and to see content of the page.
+Now it is time to make our first HTTP request and to see content of the page.
 I'll save the page's content to a variable to be able to play with parsing.
+
 
 ```lisp
 CL-USER> (defparameter *response*
@@ -95,7 +95,8 @@ CL-USER> *response*
     <link rel="stylesheet" href="/static/bootstrap.min.css">
     <link rel="stylesheet" href="/static/m...[sly-elided string of length 11011]"
 ```
-The first version of the spider in Scrapy tutorial just saves a page's content into the file. Let's do the same but with Scrapy`CL`!
+
+The first version of the spider in Scrapy tutorial just saves a page's content into the file. Let's do the same but with ScrapyCL!
 
 First, try to start our scraper:
 
@@ -104,7 +105,8 @@ CL-USER> (scrapycl:start (make-instance 'quotes-spider) :wait t)
 (#<QUOTES-PAGE-REQUEST https://quotes.toscrape.com/page/2/>
  #<QUOTES-PAGE-REQUEST https://quotes.toscrape.com/page/1/>)
 ```
-It returns initial page requests as is because we didn't write a method for [`scrapycl:process`][0482] generic-function. Now we'll define it to save content into the files:
+
+It returns initial page requests as is because we didn't write a method for SCRAPYCL:PROCESS generic-function. Now we'll define it to save content into the files:
 
 ```
 CL-USER> (defmethod scrapycl:process ((spider quotes-spider)
@@ -120,6 +122,7 @@ CL-USER> (defmethod scrapycl:process ((spider quotes-spider)
                (values))))
 #<STANDARD-METHOD SCRAPYCL:PROCESS (QUOTES-SPIDER QUOTES-PAGE-REQUEST) {1003CCD523}>
 ```
+
 Next attempt to start the scraper will output information that data was saved to the files:
 
 ```
@@ -130,19 +133,23 @@ CL-USER> (scrapycl:start (make-instance 'quotes-spider) :wait t)
   Page saved to FILENAME: "quotes-1.html" 
 NIL
 ```
-Now it is time to extract useful information out from these `HTML` pages.
 
-<a id="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
+Now it is time to extract useful information out from these HTML pages.
+"""
+  )
 
-### Extracting the Data
 
-Where Scrapy shows iPython `REPL`:
+(defsection @extracting-data (:title "Extracting the Data")
+  """
+  Where Scrapy shows iPython REPL:
 
 ```
 >>> response.css("title::text").getall()
 ['Quotes to Scrape']
 ```
-We have a full-featured Common Lisp `REPL`. For `HTML` parsing we'll use great [lQuery library][8cd8]. Here is how we can reproduce python code in Lisp using lquery `DSL`:
+
+We have a full-featured Common Lisp REPL. For HTML parsing we'll use great [lQuery library](https://shinmera.github.io/lquery/). Here is how we can reproduce python code in Lisp using lquery DSL:
+
 
 ```
 CL-USER> (lquery:$
@@ -151,7 +158,8 @@ CL-USER> (lquery:$
            (text))
 #("Quotes to Scrape")
 ```
-lQuery is parses data in a functional way. It has [amazing documentation][8cd8]. Take a moment and read it to understand the basic principles.
+
+lQuery is parses data in a functional way. It has [amazing documentation](https://shinmera.github.io/lquery/). Take a moment and read it to understand the basic principles.
 
 Then Python tutorial shows us what `getall` method returns:
 
@@ -159,6 +167,7 @@ Then Python tutorial shows us what `getall` method returns:
 response.css("title").getall()
 ['<title>Quotes to Scrape</title>']
 ```
+
 With lisp we could do the same. Just drop `(text)` form at the end of the lquery pipeline:
 
 ```
@@ -167,7 +176,8 @@ CL-USER> (lquery:$
            "title")
 #(#<PLUMP-DOM:ELEMENT title {1004CAAF43}>)
 ```
-But this code returns us a set of `HTML` nodes. If you want to see the actual `HTML` code behind it,
+
+But this code returns us a set of HTML nodes. If you want to see the actual HTML code behind it,
 use `(serialize)` form:
 
 ```
@@ -177,12 +187,14 @@ CL-USER> (lquery:$
            (serialize))
 #("<title>Quotes to Scrape</title>")
 ```
+
 To get only a single item in Python you use `get` method instead of `getall`:
 
 ```
 >>> response.css("title::text").get()
 'Quotes to Scrape'
 ```
+
 In Lisp use `lquery:$1` macro instead of `lquery:$`:
 
 ```
@@ -192,6 +204,7 @@ CL-USER> (lquery:$1
            (text))
 "Quotes to Scrape"
 ```
+
 You see, it returns a single object instead of an array!
 
 As an alternative, you could’ve written in Python:
@@ -200,6 +213,7 @@ As an alternative, you could’ve written in Python:
 >>> response.css("title::text")[0].get()
 'Quotes to Scrape'
 ```
+
 In Lisp we can do the same:
 
 ```
@@ -210,12 +224,14 @@ CL-USER> (let* ((nodes (lquery:$
            (plump:text title-node))
 "Quotes to Scrape"
 ```
+
 There is no analogue to `re` from Scrapy in lQuery:
 
 ```
 >>> response.css("title::text").re(r"Quotes.*")
 ['Quotes to Scrape']
 ```
+
 but you can use a filter function:
 
 ```
@@ -227,12 +243,14 @@ CL-USER> (lquery:$
                      (cl-ppcre:scan "Quotes.*" text))))
 #("Quotes to Scrape")
 ```
+
 Another example from Python code:
 
 ```
 >>> response.css("title::text").re(r"Q\w+")
 ['Quotes']
 ```
+
 Becomes in Lisp:
 
 ```
@@ -245,13 +263,17 @@ CL-USER> (lquery:$
                  :replace t))
 #("Quotes")
 ```
+
+
 And this Python code:
 
 ```
 >>> response.css("title::text").re(r"(\w+) to (\w+)")
 ['Quotes', 'Scrape']
 ```
+
 becomes:
+
 
 ```
 CL-USER> (lquery:$1
@@ -264,11 +286,12 @@ CL-USER> (lquery:$1
                                                        text)))))
 #("Quotes" "Scrape")
 ```
-<a id="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-QUOTES-AND-AUTHORS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
+  """)
 
-### Extracting Quotes and Authors (step2.lisp)
 
-We already have first page's content in the `*response*` variable. Now let's extract quotes!
+(defsection @extracting-quotes-and-authors (:title "Extracting Quotes and Authors (step2.lisp)")
+  """
+  We already have first page's content in the `*response*` variable. Now let's extract quotes!
 
 Instead of this Python code:
 
@@ -278,6 +301,7 @@ response.css("div.quote")
 <Selector query="descendant-or-self::div[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]" data='<div class="quote" itemscope itemtype...'>,
 ...]
 ```
+
 We can do this in Lisp:
 
 ```
@@ -289,7 +313,8 @@ CL-USER> (lquery:$
   #<PLUMP-DOM:ELEMENT div {100984F243}> #<PLUMP-DOM:ELEMENT div {1009860F43}>
   #<PLUMP-DOM:ELEMENT div {10098621D3}> #<PLUMP-DOM:ELEMENT div {1009862EF3}>)
 ```
-Here is how we can to limit the number of items to not clutter the `REPL`. lQuery provides a `(function ...)` form where you can call any function you like. We'll use it to apply Serapeum's `take` function to cut only two first elements from the array of nodes:
+
+Here is how we can to limit the number of items to not clutter the REPL. lQuery provides a `(function ...)` form where you can call any function you like. We'll use it to apply Serapeum's `take` function to cut only two first elements from the array of nodes:
 
 ```
 CL-USER> (lquery:$
@@ -300,6 +325,7 @@ CL-USER> (lquery:$
              (serapeum:take 2 nodes))))
 #(#<PLUMP-DOM:ELEMENT div {10028E1903}> #<PLUMP-DOM:ELEMENT div {10028E2B93}>)
 ```
+
 Now it is easy to add `(serialize)` form and preview the extracted pieces:
 
 ```
@@ -345,6 +371,7 @@ CL-USER> (lquery:$
         </div>
     </div>")
 ```
+
 Now let's extract the first quote. Instead of this code in Python which sequentilly extracts quote node and then it's subelements:
 
 ```
@@ -355,6 +382,7 @@ Now let's extract the first quote. Instead of this code in Python which sequenti
 >>> author
 'Albert Einstein'
 ```
+
 We will use the power of functional approach and extract all needed data in a single pipeline using lQuery's form `(combine ...)`:
 
 ```
@@ -376,6 +404,7 @@ CL-USER> (lquery:$
   ("“It is our choices, Harry, that show what we truly are, far more than our abilities.”"
    "J.K. Rowling"))
 ```
+
 Note, this code we put after the `serapeum:take 2`:
 
 ```
@@ -387,12 +416,14 @@ Note, this code we put after the `serapeum:take 2`:
    "small.author"
    (text))))
 ```
+
 It allows us to extract two subelements of the `div.quote` node simultaneously, using function `combine`. These two pieces are combined into an array like:
 
 ```
 #("“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”"
    "Albert Einstein")
 ```
+
 But because of functional nature of lQuery, this `combine` operation is applied to all `div.quote` nodes on the page and we don't have to write explicit iteration loop.
 
 After that, original Scrapy's tutorial shows us how to extract tags list for each quote:
@@ -402,6 +433,7 @@ After that, original Scrapy's tutorial shows us how to extract tags list for eac
 >>> tags
 ['change', 'deep-thoughts', 'thinking', 'world']
 ```
+
 but knowing how does `combine` work, we can just add another rule into the `combine` form:
 
 ```
@@ -426,9 +458,10 @@ CL-USER> (lquery:$
   ("“It is our choices, Harry, that show what we truly are, far more than our abilities.”"
    "J.K. Rowling" #("abilities" "choices")))
 ```
+
 Note, for tags we are using `lquery:$` because there is a list of them.
 
-Scrapy's tutorial creates a hash table for each quote, but Scrapy`CL` framework's pipeline operates on `CLOS` objects. So, we'll create a separate `QUOTE-ITEM` class:
+Scrapy's tutorial creates a hash table for each quote, but ScrapyCL framework's pipeline operates on CLOS objects. So, we'll create a separate `QUOTE-ITEM` class:
 
 ```
 CL-USER> (defclass quote-item ()
@@ -450,7 +483,8 @@ CL-USER> (defmethod print-object ((obj quote-item) stream)
                      (quote-author obj)
                      (quote-tags obj))))
 ```
-Now we'll use `map-apply` to transform parsed data into these `CLOS` objects:
+
+Now we'll use `map-apply` to transform parsed data into these CLOS objects:
 
 ```
 CL-USER> (lquery:$
@@ -478,7 +512,8 @@ CL-USER> (lquery:$
 #(#<QUOTE-ITEM “The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.” by Albert Einstein #change, #deep-thoughts, #thinking, #world>
   #<QUOTE-ITEM “It is our choices, Harry, that show what we truly are, far more than our abilities.” by J.K. Rowling #abilities, #choices>)
 ```
-Put this piece of code into our method for [`scrapycl:process`][0482] generic-function:
+
+Put this piece of code into our method for SCRAPYCL:PROCESS generic-function:
 
 ```
 CL-USER> (defmethod scrapycl:process ((spider quotes-spider)
@@ -504,6 +539,7 @@ CL-USER> (defmethod scrapycl:process ((spider quotes-spider)
                                  :author author
                                  :tags (coerce tags 'list)))))))
 ```
+
 And don't forget to remove this piece of code limiting the number of processed quotes:
 
 ```
@@ -511,6 +547,7 @@ And don't forget to remove this piece of code limiting the number of processed q
    (lambda (nodes)
      (serapeum:take 2 nodes)))
 ```
+
 we needed it only for a debug purpose.
 
 Now start our scraper:
@@ -521,55 +558,63 @@ CL-USER> (scrapycl:start (make-instance 'quotes-spider) :wait t)
  #<QUOTE-ITEM “Good friends, good books, and a sleepy conscience: this is the ideal life.” by Mark Twain #books, #contentment, #friends, #friendship, #life>
 ...
 ```
+
 As you can see, by default it returns a list of all items on the page, but in real world you will want this data to be saved or processed. In the next part we'll see how to do this.
 
-<a id="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40STORING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
+"""
+  )
 
-### Storing the Scraped Data
 
+(defsection @storing-data (:title "Storing the Scraped Data")
+  """
 Scrapy's tutorial shows this command as example on how to save scraped data to a json file:
 
 ```
 scrapy crawl quotes -O quotes.json
 ```
-With Scrapy`CL` we can do the similar but with `OUTPUT` argument to the [`scrapycl:start`][24dc] generic-function and [`scrapycl:json-lines`][8b56] function:
+
+With ScrapyCL we can do the similar but with OUTPUT argument to the SCRAPYCL:START generic-function and SCRAPYCL:JSON-LINES function:
 
 ```
 CL-USER> (scrapycl:start (make-instance 'quotes-spider)
                          :wait t
                          :output (scrapycl:json-lines #P"items.json"))
 ```
+
 And content of `items.json` file will look like:
 
 ```json
 {"text":"“A day without sunshine is like, you know, night.”","author":"Steve Martin","tags":["humor","obvious","simile"]}
 {"text":"“A woman is like a tea bag; you never know how strong it is until it's in hot water.”","author":"Eleanor Roosevelt","tags":["misattributed-eleanor-roosevelt"]}
 ```
-Each object is on it's own line in a [JsonLines][2490] format. If you want to get a `JSON` file with a list, then use [`scrapycl:json-list`][2cad] instead. Or use [`scrapycl:json-dict`][8baf] to get a file with `JSON` object. But beware, these two outputs can't work in `:APPEND` mode.
 
-<a id="custom-processing"></a>
+Each object is on it's own line in a [JsonLines](https://jsonlines.org/) format. If you want to get a JSON file with a list, then use `SCRAPYCL:JSON-LIST` instead. Or use `SCRAPYCL:JSON-DICT` to get a file with JSON object. But beware, these two outputs can't work in :APPEND mode.
 
-#### Custom processing
 
-Actually, `OUTPUT` argument accepts any lisp function. The only requirements are:
+### Custom processing
 
-* This function should accept a single argument. The objects for which there is no specialized method of [`scrapycl:process`][0482] generic-function will be passed into this function.
-* It should accept `SCRAPYCL:STOP-OUTPUT` symbol and flush buffer, closing a file or a transaction, because this symbol is sent when all hrefs were processed and there is no more data to process.
+Actually, OUTPUT argument accepts any lisp function. The only requirements are:
 
-<a id="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40FOLLOWING-LINKS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
+- This function should accept a single argument. The objects for which there is no specialized method of SCRAPYCL:PROCESS generic-function will be passed into this function.
+- It should accept SCRAPYCL:STOP-OUTPUT symbol and flush buffer, closing a file or a transaction, because this symbol is sent when all hrefs were processed and there is no more data to process.
 
-### Following the Links
+"""
+  )
 
+
+(defsection @following-links (:title "Following the Links")
+  """
 In Scrapy framework for following links you should yield a request object like this:
 
 ```
 yield scrapy.Request(next_page, callback=self.parse)
 ```
-With Scrapy`CL` to follow links, you need to return new request objects from your method for [`scrapycl:process`][0482] generic-function. And because you are returning an object of a customized request class, you can add more data slots to the request to make this additional data available during request processing. For example, such data might include a parent category of the page or an some piece of data available on other page.
+
+With ScrapyCL to follow links, you need to return new request objects from your method for SCRAPYCL:PROCESS generic-function. And because you are returning an object of a customized request class, you can add more data slots to the request to make this additional data available during request processing. For example, such data might include a parent category of the page or an some piece of data available on other page.
 
 Scrapy's test site contains quotes and their authors. Let's make our scraper parse not only quotes but also their authors. See `tutorial/step3.lisp` file for the full code for this part.
 
-First, we need to add an `AUTHOR-ITEM` class:
+First, we need to add an AUTHOR-ITEM class:
 
 ```
 CL-USER> (defclass author-item ()
@@ -590,6 +635,7 @@ CL-USER> (defmethod print-object ((obj author-item) stream)
                      (author-name obj))))
 #<STANDARD-METHOD COMMON-LISP:PRINT-OBJECT (AUTHOR-ITEM T) {1003CD8723}>
 ```
+
 Now let's make our spider do follow links leading to the next page and to the authors pages.
 
 Here is how we can extract the link to the next page:
@@ -601,9 +647,10 @@ CL-USER> (lquery:$1
            (attr "href"))
 "/page/2/"
 ```
-But we need an absolute `URL` for request. So we have to merge this path with a base `URL`.
 
-[`scrapycl:fetch`][1128] generic-function returns current page's real `URL` as a second value. Also, Scrapy`CL` provides a `MERGE-WITH-URL` lquery form. Together they can be used like this:
+But we need an absolute URL for request. So we have to merge this path with a base URL.
+
+SCRAPYCL:FETCH generic-function returns current page's real URL as a second value. Also, ScrapyCL provides a MERGE-WITH-URL lquery form. Together they can be used like this:
 
 ```
 CL-USER> (multiple-value-bind (response base-url)
@@ -617,12 +664,13 @@ CL-USER> (multiple-value-bind (response base-url)
              (merge-url-with base-url)))
 "https://quotes.toscrape.com/page/2/"
 ```
-It is better to use `URL` returned by [`scrapycl:fetch`][1128] generic-function because of these two reasons:
 
-* This `URL` can differ from original request `URL` because site might redirect request to the other page.
-* Href attributes on the page can be relative, like `../quotes/page/1` and will not work if you'll hardcode base url.
+It is better to use URL returned by SCRAPYCL:FETCH generic-function because of these two reasons:
 
-Let's figure out which author pages should be followed. Original Scrapy tutorial uses this `CSS` selector `.author + a`, but lquery does not support `+` selector. To find a siblings of `.author` element but we can use `NEXT` form to select subsequent element following the `author` node:
+- This URL can differ from original request URL because site might redirect request to the other page.
+- Href attributes on the page can be relative, like `../quotes/page/1` and will not work if you'll hardcode base url.
+
+Let's figure out which author pages should be followed. Original Scrapy tutorial uses this CSS selector `.author + a`, but lquery does not support `+` selector. To find a siblings of `.author` element but we can use `NEXT` form to select subsequent element following the `author` node:
 
 ```
 CL-USER> (multiple-value-bind (response base-url)
@@ -646,7 +694,8 @@ CL-USER> (multiple-value-bind (response base-url)
   "https://quotes.toscrape.com/author/Eleanor-Roosevelt"
   "https://quotes.toscrape.com/author/Steve-Martin")
 ```
-Ok, now, when we have a `URL`s to follow, let's modify our processing function to return them as new requests:
+
+Ok, now, when we have a URLs to follow, let's modify our processing function to return them as new requests:
 
 ```
 CL-USER> (defclass author-page-request (scrapycl:request)
@@ -701,6 +750,7 @@ CL-USER> (defmethod scrapycl:process ((spider quotes-spider)
                                       :url next-page-url))))))
 #<STANDARD-METHOD SCRAPYCL:PROCESS (QUOTES-SPIDER QUOTES-PAGE-REQUEST) {1005E33C53}>
 ```
+
 We return objects of three types from this processing method: quote-items, quotes-page-requests and author-page-requests.
 
 Now if we will run our scraper, then we'll see it walks only through quotes pages and ignores author pages:
@@ -716,7 +766,9 @@ CL-USER> (scrapycl:start (make-instance 'quotes-spider)
   Fetched BASE-URL: #<QURI.URI.HTTP:URI-HTTPS https://quotes.toscrape.com/page/2/>
   
 NIL
+
 ```
+
 But in the file `items.json` you might see interesting records:
 
 ```
@@ -726,9 +778,11 @@ But in the file `items.json` you might see interesting records:
 {"url":"https://quotes.toscrape.com/author/Andre-Gide"}
 ...
 ```
-This is because we forgot to define a processing method for our class `AUTHOR-PAGE-REQUEST`. Scrapy`CL` sees objects without a processing method and decides these are final objects to be serialized to the output. Let's write a method to extract information about authors as well.
+
+This is because we forgot to define a processing method for our class AUTHOR-PAGE-REQUEST. ScrapyCL sees objects without a processing method and decides these are final objects to be serialized to the output. Let's write a method to extract information about authors as well.
 
 Here I've just translated these Python rules:
+
 
 ```
 def parse_author(self, response):
@@ -741,7 +795,8 @@ def parse_author(self, response):
         "bio": extract_with_css(".author-description::text"),
     }
 ```
-into the lquery `DSL`:
+
+into the lquery DSL:
 
 ```
 CL-USER> (multiple-value-bind (response)
@@ -765,7 +820,9 @@ CL-USER> (multiple-value-bind (response)
 ("Thomas A. Edison" "February 11, 1847"
  "Thomas Alva Edison was an American inventor, scientist and businessman who developed many devices that greatly influenced life around the world, including the phonograph, the motion picture camera, and a long-lasting, practical electric light bulb. Dubbed \"The Wizard of Menlo Park\" (now Edison, New Jersey) by a newspaper reporter, he was one of the first inventors to apply the principles of mass production and large teamwork to the process of invention, and therefore is often credited with the creation of the first industrial research laboratory.Edison is considered one of the most prolific inventors in history, holding 1,093 U.S. patents in his name, as well as many patents in the United Kingdom, France and Germany. He is credited with numerous inventions that contributed to mass communication and, in particular, telecommunications. His advanced work in these fields was an outgrowth of his early career as a telegraph operator. Edison originated the concept and implementation of electric-power generation and distribution to homes, businesses, and factories – a crucial development in the modern industrialized world. His first power station was on Manhattan Island, New York.")
 ```
+
 And here is the full processing method which will return an author object:
+
 
 ```
 CL-USER> (defmethod scrapycl:process ((spider quotes-spider)
@@ -796,11 +853,13 @@ CL-USER> (defmethod scrapycl:process ((spider quotes-spider)
                                  
 #<STANDARD-METHOD SCRAPYCL:PROCESS (QUOTES-SPIDER AUTHOR-PAGE-REQUEST) {10020C9733}>
 ```
+
+
 Now, if you start the our spider again, you'll get quotes and authors mixed in the same `items.json` file.
 
 But how to put different kinds of object into a different output files?
 
-This is easy - just use a [`scrapycl:typed-output`][ae6a] function. This kind of output redirects items into another outputs depending on their type.
+This is easy - just use a SCRAPYCL:TYPED-OUTPUT function. This kind of output redirects items into another outputs depending on their type.
 
 To separate output into `quotes.json` and `authors.json`, execute our scraper like this:
 
@@ -825,210 +884,9 @@ CL-USER> (scrapycl:start (make-instance 'quotes-spider)
   
 NIL
 ```
+
 It will save each type of item in a separate file.
 
-I hope this little introduction will urge you to try Scrapy`CL` for writing your own data scrapers! Feel free to share your ideas on the project's [discussions page][f9c2].
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-## API
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-### SCRAPYCL
-
-<a id="x-28-23A-28-288-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-22-29-20PACKAGE-29"></a>
-
-#### [package](b0b2) `scrapycl`
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-#### Classes
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24FETCH-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-##### FETCH-ERROR
-
-<a id="x-28SCRAPYCL-3AFETCH-ERROR-20CONDITION-29"></a>
-
-###### [condition](5010) `scrapycl:fetch-error` (scrapycl-error)
-
-This condition is signalled when [`scrapycl:fetch`][1128] generic-function gets non 200 status code.
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24REQUEST-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-##### REQUEST
-
-<a id="x-28SCRAPYCL-3AREQUEST-20CLASS-29"></a>
-
-###### [class](4dbf) `scrapycl:request` ()
-
-**Readers**
-
-<a id="x-28SCRAPYCL-3AREQUEST-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AREQUEST-29-29"></a>
-
-###### [reader](9736) `scrapycl:request-url` (request) (:URL = (ERROR "Please, provide :URL argument."))
-
-`URL` to fetch data from.
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SCRAPYCL-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-##### SCRAPYCL-ERROR
-
-<a id="x-28SCRAPYCL-3ASCRAPYCL-ERROR-20CONDITION-29"></a>
-
-###### [condition](3573) `scrapycl:scrapycl-error` (error)
-
-Base class for all Scrapy`CL` errors.
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SPIDER-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-##### SPIDER
-
-<a id="x-28SCRAPYCL-3ASPIDER-20CLASS-29"></a>
-
-###### [class](14ae) `scrapycl:spider` ()
-
-**Readers**
-
-<a id="x-28SCRAPYCL-2FSPIDER-3A-3A-25INITIAL-REQUESTS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29"></a>
-
-###### [reader](3f4b) `scrapycl/spider::%initial-requests` (spider) (:initial-requests = nil)
-
-<a id="x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29"></a>
-
-###### [reader](f208) `scrapycl/spider::%spider-queue` (spider) (= nil)
-
-<a id="x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29"></a>
-
-###### [reader](8b95) `scrapycl/spider::%spider-queue-lock` (spider) (= (MAKE-LOCK :NAME "Scrapycl Queue Lock"))
-
-<a id="x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-THREAD-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29"></a>
-
-###### [reader](fd2b) `scrapycl/spider::%spider-thread` (spider) (= nil)
-
-**Accessors**
-
-<a id="x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29"></a>
-
-###### [accessor](f208) `scrapycl/spider::%spider-queue` (spider) (= nil)
-
-<a id="x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29"></a>
-
-###### [accessor](8b95) `scrapycl/spider::%spider-queue-lock` (spider) (= (MAKE-LOCK :NAME "Scrapycl Queue Lock"))
-
-<a id="x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-THREAD-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29"></a>
-
-###### [accessor](fd2b) `scrapycl/spider::%spider-thread` (spider) (= nil)
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FGenerics-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-#### Generics
-
-<a id="x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29"></a>
-
-##### [generic-function](ce60) `scrapycl:fetch` spider request &key max-redirects timeout custom-headers
-
-Fetches page from request's `URL`.
-
-Returns a multiple values:
-
-* A string with `HTML` response.
-* `URL` from which response was received. Might be different from original `URL` because of redirects.
-* A hash-table with reponse `HTTP` headers.
-
-<a id="x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29"></a>
-
-##### [generic-function](a378) `scrapycl:process` spider object
-
-<a id="x-28SCRAPYCL-3ASTART-20GENERIC-FUNCTION-29"></a>
-
-##### [generic-function](7c50) `scrapycl:start` spider &key wait output &allow-other-keys
-
-<a id="x-28SCRAPYCL-3AWRITE-AS-JSON-20GENERIC-FUNCTION-29"></a>
-
-##### [generic-function](97b7) `scrapycl:write-as-json` object stream
-
-<a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
-
-#### Functions
-
-<a id="x-28SCRAPYCL-3AENQUEUE-20FUNCTION-29"></a>
-
-##### [function](d4e7) `scrapycl:enqueue` spider object &key (output-func nil scrapycl/engine::output-func-p)
-
-<a id="x-28SCRAPYCL-3AJSON-DICT-20FUNCTION-29"></a>
-
-##### [function](379a) `scrapycl:json-dict` FILENAME &KEY (KEY "items")
-
-Creates an "output" callback for serializing objects as a list inside a `JSON` dictionary.
-
-<a id="x-28SCRAPYCL-3AJSON-LINES-20FUNCTION-29"></a>
-
-##### [function](bc23) `scrapycl:json-lines` filename &key (if-exists :supersede)
-
-<a id="x-28SCRAPYCL-3AJSON-LIST-20FUNCTION-29"></a>
-
-##### [function](3f3a) `scrapycl:json-list` filename
-
-<a id="x-28SCRAPYCL-3APREVIEW-20FUNCTION-29"></a>
-
-##### [function](5c8a) `scrapycl:preview` nodes
-
-<a id="x-28SCRAPYCL-3ATYPED-OUTPUT-20FUNCTION-29"></a>
-
-##### [function](0bd2) `scrapycl:typed-output` type-to-output-alist
-
-
-[174b]: https://40ants.com/scrapycl/
-[1128]: https://40ants.com/scrapycl/#x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29
-[8baf]: https://40ants.com/scrapycl/#x-28SCRAPYCL-3AJSON-DICT-20FUNCTION-29
-[8b56]: https://40ants.com/scrapycl/#x-28SCRAPYCL-3AJSON-LINES-20FUNCTION-29
-[2cad]: https://40ants.com/scrapycl/#x-28SCRAPYCL-3AJSON-LIST-20FUNCTION-29
-[0482]: https://40ants.com/scrapycl/#x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29
-[dcea]: https://40ants.com/scrapycl/#x-28SCRAPYCL-3ASPIDER-20CLASS-29
-[24dc]: https://40ants.com/scrapycl/#x-28SCRAPYCL-3ASTART-20GENERIC-FUNCTION-29
-[ae6a]: https://40ants.com/scrapycl/#x-28SCRAPYCL-3ATYPED-OUTPUT-20FUNCTION-29
-[b2a5]: https://docs.scrapy.org/en/latest/intro/tutorial.html
-[66a8]: https://github.com/40ants/scrapycl
-[5d38]: https://github.com/40ants/scrapycl/actions
-[b0b2]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/core.lisp#L1
-[ce60]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/downloader.lisp#L16
-[d4e7]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/engine.lisp#L105
-[a378]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/engine.lisp#L128
-[3573]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/errors.lisp#L10
-[5010]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/errors.lisp#L15
-[bc23]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/output/json.lisp#L112
-[3f3a]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/output/json.lisp#L123
-[379a]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/output/json.lisp#L145
-[97b7]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/output/json.lisp#L19
-[0bd2]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/output/typed.lisp#L16
-[4dbf]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/request.lisp#L11
-[9736]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/request.lisp#L12
-[14ae]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/spider.lisp#L24
-[f208]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/spider.lisp#L25
-[8b95]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/spider.lisp#L27
-[fd2b]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/spider.lisp#L29
-[3f4b]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/spider.lisp#L31
-[7c50]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/spider.lisp#L37
-[5c8a]: https://github.com/40ants/scrapycl/blob/58729e4f355e0efa3ce34264dea49736f42c50ea/src/utils.lisp#L81
-[f9c2]: https://github.com/40ants/scrapycl/discussions
-[1e8e]: https://github.com/40ants/scrapycl/issues
-[2490]: https://jsonlines.org/
-[2c00]: https://quickdocs.org/40ants-doc
-[8236]: https://quickdocs.org/alexandria
-[3dbf]: https://quickdocs.org/bordeaux-threads
-[61a4]: https://quickdocs.org/closer-mop
-[8347]: https://quickdocs.org/dexador
-[7f8b]: https://quickdocs.org/log4cl
-[691c]: https://quickdocs.org/log4cl-extras
-[557a]: https://quickdocs.org/lquery
-[2103]: https://quickdocs.org/quri
-[c41d]: https://quickdocs.org/serapeum
-[8175]: https://quickdocs.org/spinneret
-[ef7f]: https://quickdocs.org/str
-[aba2]: https://quickdocs.org/yason
-[8cd8]: https://shinmera.github.io/lquery/
-
-* * *
-###### [generated by [40ANTS-DOC](https://40ants.com/doc/)]
+I hope this little introduction will urge you to try ScrapyCL for writing your own data scrapers! Feel free to share your ideas on the project's [discussions page](https://github.com/40ants/scrapycl/discussions).
+"""
+  )

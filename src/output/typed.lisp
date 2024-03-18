@@ -2,7 +2,9 @@
   (:use #:cl)
   (:import-from #:serapeum
                 #:->)
-  (:export #:typed-output))
+  (:import-from #:scrapycl/core
+                #:stop-output
+                #:typed-output))
 (in-package #:scrapycl/output/typed)
 
 
@@ -14,7 +16,7 @@
 (defun typed-output (type-to-output-alist)
   (flet ((process (object)
            (cond
-             ((eql object 'scrapycl/output:stop-output)
+             ((eql object 'stop-output)
               ;; This kind of object should be translated to all outputs
               (loop for item in type-to-output-alist
                     for output = (cdr item)

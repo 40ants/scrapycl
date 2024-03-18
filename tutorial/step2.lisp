@@ -9,18 +9,14 @@
 (in-package #:scrapycl/tutorial/step2)
 
 
-(defclass index-page-request (scrapycl:request)
-  ())
-
-
 (defclass quotes-page-request (scrapycl:request)
   ())
 
 
-(defclass step2 (scrapycl:spider)
+(defclass quotes-spider (scrapycl:spider)
   ()
   (:default-initargs
-   :initial-requests (list (make-instance 'index-page-request
+   :initial-requests (list (make-instance 'quotes-page-request
                                           :url "https://quotes.toscrape.com/"))))
 
 
@@ -44,8 +40,8 @@
             (quote-tags obj))))
 
 
-(defmethod scrapycl:process ((spider step2)
-                             (request index-page-request))
+(defmethod scrapycl:process ((spider quotes-spider)
+                             (request quotes-page-request))
   (let ((data (scrapycl:fetch spider request)))
     (lquery:$
       (initialize data)

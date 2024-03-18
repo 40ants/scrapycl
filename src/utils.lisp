@@ -7,7 +7,8 @@
   (:import-from #:quri)
   (:import-from #:serapeum
                 #:fmt)
-  (:export #:preview))
+  (:import-from #:scrapycl/core
+                #:preview))
 (in-package #:scrapycl/utils)
 
 

@@ -13,7 +13,9 @@
                "scrapycl/request"
                "scrapycl/spider"
                "scrapycl/downloader"
-               "scrapycl/utils")
+               "scrapycl/utils"
+               "scrapycl/output/json"
+               "scrapycl/output/typed")
   :in-order-to ((test-op (test-op "scrapycl-tests"))))
 
 

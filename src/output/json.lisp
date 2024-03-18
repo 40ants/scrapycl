@@ -7,11 +7,12 @@
   (:import-from #:bt2)
   (:import-from #:closer-mop
                 #:class-slots)
-  (:export #:json-file
-           #:write-as-json
-           #:json-lines
-           #:json-list
-           #:json-dict))
+  (:import-from #:scrapycl/core
+                #:stop-output
+                #:write-as-json
+                #:json-lines
+                #:json-list
+                #:json-dict))
 (in-package #:scrapycl/output/json)
 
 
@@ -35,58 +36,25 @@
       (values))))
 
 
-
-
-;; (defun json-lines (filename &key (if-exists :append))
-;;   (let ((stream nil)
-;;         (stream-closed nil)
-;;         (lock (bt2:make-lock :name (fmt "Lock on ~A" filename))))
-;;     (labels ((ensure-stream-is-opened ()
-;;                (unless stream
-;;                  (setf stream
-;;                        (open filename
-;;                              :direction :output
-;;                              :if-does-not-exist :create
-;;                              :if-exists if-exists))))
-               
-;;              (close-stream ()
-;;                (when stream
-;;                  (close stream)
-;;                  (setf stream nil)
-;;                  (setf stream-closed
-;;                        t)))
-               
-;;              (serialize (object)
-;;                (bt2:with-lock-held (lock)
-;;                  (when stream-closed
-;;                    (error "Stream to ~A was closed. Create a new JSON-FILE output."
-;;                           filename))
-                   
-;;                  (ensure-stream-is-opened)
-;;                  (cond
-;;                    ((eql object 'scrapycl/output:stop-output)
-;;                     (close-stream))
-;;                    (t
-;;                     (write-as-json object stream)
-;;                     (terpri stream))))))
-;;       (values #'serialize))))
-
-
 (-> make-json-output
     ((or string pathname)
      &key (:if-exists (or null keyword))
      (:after-stream-opened (or null function))
      (:before-stream-closed (or null function))
+     (:before-first-object (or null function))
      (:before-each-object (or null function)))
     (values function &optional))
+
 
 (defun make-json-output (filename &key (if-exists :supersede)
                                        (after-stream-opened nil)
                                        (before-stream-closed nil)
+                                       (before-first-object nil before-first-object-given-p)
                                        (before-each-object nil))
   "Internal function to reuse logic of stream opening and closing."
   (let ((stream nil)
         (stream-closed nil)
+        (first-object t)
         (lock (bt2:make-lock :name (fmt "Lock on ~A" filename))))
     (labels ((ensure-stream-is-opened ()
                (unless stream
@@ -110,16 +78,28 @@
              (serialize (object)
                (bt2:with-lock-held (lock)
                  (when stream-closed
-                   (error "Stream to ~A was closed. Create a new JSON-FILE output."
+                   (error "Stream to ~A was closed. Create a new JSON output."
                           filename))
                    
                  (ensure-stream-is-opened)
                  (cond
-                   ((eql object 'scrapycl/output:stop-output)
+                   ((eql object 'stop-output)
                     (close-stream))
                    (t
-                    (when before-each-object
-                      (funcall before-each-object stream))
+                    (let ((hook
+                            (cond
+                              (first-object
+                               (setf first-object nil)
+                               ;; Check for before-first-object-given-p
+                               ;; allows us to pass NIL in before-first-object
+                               ;; argument to suppress any action for first item:
+                               (if before-first-object-given-p
+                                   before-first-object
+                                   before-each-object))
+                              (t
+                               before-each-object))))
+                      (when hook
+                        (funcall hook stream)))
                     (write-as-json object stream))))))
       (values #'serialize))))
 
@@ -132,6 +112,7 @@
 (defun json-lines (filename &key (if-exists :supersede))
   (make-json-output filename
                     :if-exists if-exists
+                    :before-first-object nil
                     :before-each-object #'terpri))
 
 
@@ -162,6 +143,7 @@
     (values function &optional))
 
 (defun json-dict (filename &key (key "items"))
+  "Creates an \"output\" callback for serializing objects as a list inside a JSON dictionary."
   (let ((first-item t))
     (flet ((write-header (stream)
              (write-string "{\"" stream)

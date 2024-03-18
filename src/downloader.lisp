@@ -14,6 +14,13 @@
 
 
 (defgeneric fetch (spider request &key max-redirects timeout custom-headers)
+  (:documentation "Fetches page from request's URL.
+
+                   Returns a multiple values:
+
+                   - A string with HTML response.
+                   - URL from which response was received. Might be different from original URL because of redirects.
+                   - A hash-table with reponse HTTP headers.")
   (:method ((spider spider) (request request) &key max-redirects
                                                    timeout
                                                    (custom-headers '(("User-Agent" . "ScrapyCL (https://40ants.com/scrapycl/)"))))
@@ -31,4 +38,5 @@
                  :body body
                  :headers headers))
         (values body
-                last-uri)))))
+                last-uri
+                headers)))))
