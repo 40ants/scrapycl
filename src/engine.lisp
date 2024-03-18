@@ -95,7 +95,8 @@
              (process-tasks spider :on-finish on-finish)))
       (setf (scrapycl/spider::%spider-thread spider)
             (bt2:make-thread #'process-tasks-wrapper
-                             :name "Scrapycl Processor")))))
+                             :name "Scrapycl Processor"))))
+  (values))
 
 
 (defvar *output-func* nil
