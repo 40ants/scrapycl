@@ -1,15 +1,12 @@
 (uiop:define-package #:scrapycl/downloader
   (:use #:cl)
   (:import-from #:scrapycl/core
-                #:fetch)
-  (:import-from #:dex)
-  (:import-from #:scrapycl/request
+                #:spider
+                #:fetch
                 #:request
-                #:request-url)
-  (:import-from #:scrapycl/errors
+                #:request-url
                 #:fetch-error)
-  (:import-from #:scrapycl/spider
-                #:spider))
+  (:import-from #:dex))
 (in-package #:scrapycl/downloader)
 
 

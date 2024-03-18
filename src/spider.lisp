@@ -3,11 +3,10 @@
   (:import-from #:scrapycl/core
                 #:enqueue
                 #:start
-                #:spider)
+                #:spider
+                #:request)
   (:import-from #:serapeum
                 #:soft-list-of)
-  (:import-from #:scrapycl/request
-                #:request)
   (:import-from #:bt2
                 #:make-lock)
   (:import-from #:40ants-doc/ignored-words

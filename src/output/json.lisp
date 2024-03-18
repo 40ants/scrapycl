@@ -4,6 +4,7 @@
                 #:->
                 #:fmt)
   (:import-from #:yason)
+  (:import-from #:str)
   (:import-from #:bt2)
   (:import-from #:closer-mop
                 #:class-slots)

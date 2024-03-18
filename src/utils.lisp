@@ -3,6 +3,7 @@
   (:import-from #:alexandria)
   (:import-from #:str)
   (:import-from #:spinneret)
+  (:import-from #:plump)
   (:import-from #:lquery)
   (:import-from #:quri)
   (:import-from #:serapeum

@@ -1,7 +1,5 @@
 (uiop:define-package #:scrapycl/task
-  (:use #:cl)
-  (:import-from #:scrapycl/core
-                #:spider))
+  (:use #:cl))
 (in-package #:scrapycl/task)
 
 

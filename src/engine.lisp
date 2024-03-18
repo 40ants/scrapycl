@@ -6,7 +6,8 @@
                 #:spider
                 #:start
                 #:process
-                #:enqueue)
+                #:enqueue
+                #:request-url)
   (:import-from #:scrapycl/spider)
   (:import-from #:scrapycl/task
                 #:task
@@ -19,9 +20,7 @@
   (:import-from #:scrapycl/core
                 #:stop-output)
   (:import-from #:serapeum
-                #:->)
-  (:import-from #:scrapycl/request
-                #:request-url))
+                #:->))
 (in-package #:scrapycl/engine)
 
 

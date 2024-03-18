@@ -2,8 +2,7 @@
   (:use #:cl)
   (:import-from #:scrapycl/core
                 #:request
-                #:request-url)
-  (:import-from #:scrapycl/types
+                #:request-url
                 #:url))
 (in-package #:scrapycl/request)
 
