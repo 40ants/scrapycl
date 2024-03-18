@@ -51,7 +51,7 @@
         },
         {
           "name": "Run Linter",
-          "run": "qlot exec 40ants-linter --system \"scrapycl, scrapycl-docs, scrapycl-tests\"",
+          "run": "qlot exec 40ants-linter --system \"scrapycl, scrapycl-docs, scrapycl-tests\" --imports",
           "shell": "bash"
         }
       ]

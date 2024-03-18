@@ -18,7 +18,8 @@
   :jobs ((40ants-ci/jobs/linter:linter
           :asdf-systems ("scrapycl"
                          "scrapycl-docs"
-                         "scrapycl-tests"))))
+                         "scrapycl-tests")
+          :check-imports t)))
 
 (defworkflow docs
   :on-push-to "master"
