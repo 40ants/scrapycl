@@ -36,7 +36,5 @@
   :jobs ((run-tests
           :asdf-system "scrapycl"
           :lisp ("sbcl-bin"
-                 ;; Issue https://github.com/roswell/roswell/issues/534
-                 ;; is still reproduces on 2023-02-06:
-                 "ccl-bin/1.12.0")
+                 "ccl-bin")
           :coverage t)))
