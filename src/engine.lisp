@@ -20,6 +20,10 @@
   (:import-from #:scrapycl/core
                 #:stop-output)
   (:import-from #:serapeum
+                #:clear-queue
+                #:deq
+                #:enq
+                #:push-end
                 #:->))
 (in-package #:scrapycl/engine)
 
@@ -30,11 +34,7 @@
 
 (defun get-next-task (spider)
   (bt2:with-lock-held ((scrapycl/spider::%spider-queue-lock spider))
-    (prog1 (car
-            (scrapycl/spider::%spider-queue spider))
-      (setf (scrapycl/spider::%spider-queue spider)
-            (cdr
-             (scrapycl/spider::%spider-queue spider))))))
+    (deq (scrapycl/spider::%spider-queue spider))))
 
 
 
@@ -109,12 +109,14 @@
                            :output-func (if output-func-p
                                             output-func
                                             *output-func*))))
-      (push task (scrapycl/spider::%spider-queue spider)))))
+      (enq task
+           (scrapycl/spider::%spider-queue spider))
+      (values))))
 
 
 (declaim (ftype (function (scrapycl/core::spider
                            scrapycl/task::task)
-                          (values t &optional))
+                          (values (or list vector) &optional))
                 execute))
 
 (defun execute (spider task)
@@ -146,8 +148,8 @@
 
 (defmethod start ((spider spider) &key wait (output :list))
   (bt2:with-lock-held ((scrapycl/spider::%spider-queue-lock spider))
-    (setf (scrapycl/spider::%spider-queue spider)
-          nil))
+    (clear-queue (scrapycl/spider::%spider-queue spider))
+    (values))
     
   (uiop:while-collecting (collect-item)
     (let* ((output-is-function

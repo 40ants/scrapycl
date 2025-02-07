@@ -115,6 +115,7 @@
 
 
 (lquery:define-lquery-function merge-url-with (node base-url)
-  (check-type node string)
-  (quri:render-uri
-   (quri:merge-uris node base-url)))
+  (when node
+    (check-type node string)
+    (quri:render-uri
+     (quri:merge-uris node base-url))))

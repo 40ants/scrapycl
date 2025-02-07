@@ -16,7 +16,8 @@
                "scrapycl/utils"
                "scrapycl/errors"
                "scrapycl/output/json"
-               "scrapycl/output/typed")
+               "scrapycl/output/typed"
+               "scrapycl/types")
   :in-order-to ((test-op (test-op "scrapycl-tests"))))
 
 
