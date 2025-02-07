@@ -12,7 +12,11 @@
   (:export #:url)
   (:export #:stop-output)
   (:export #:fetch-error
-           #:scrapycl-error)
+           #:scrapycl-error
+           #:response-url
+           #:response-status
+           #:response-body
+           #:response-headers)
   (:export #:request-url
            #:request)
   (:export #:typed-output)

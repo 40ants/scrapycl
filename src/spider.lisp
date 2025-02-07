@@ -6,6 +6,7 @@
                 #:spider
                 #:request)
   (:import-from #:serapeum
+                #:queue
                 #:soft-list-of)
   (:import-from #:bt2
                 #:make-lock)
@@ -21,7 +22,8 @@
 
 
 (defclass spider ()
-  ((queue :initform nil
+  ((queue :initform (queue)
+          :type queue
           :accessor %spider-queue)
    (queue-lock :initform (make-lock :name "Scrapycl Queue Lock")
                :accessor %spider-queue-lock)

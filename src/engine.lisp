@@ -20,6 +20,10 @@
   (:import-from #:scrapycl/core
                 #:stop-output)
   (:import-from #:serapeum
+                #:clear-queue
+                #:deq
+                #:enq
+                #:push-end
                 #:->))
 (in-package #:scrapycl/engine)
 
@@ -30,11 +34,7 @@
 
 (defun get-next-task (spider)
   (bt2:with-lock-held ((scrapycl/spider::%spider-queue-lock spider))
-    (prog1 (car
-            (scrapycl/spider::%spider-queue spider))
-      (setf (scrapycl/spider::%spider-queue spider)
-            (cdr
-             (scrapycl/spider::%spider-queue spider))))))
+    (deq (scrapycl/spider::%spider-queue spider))))
 
 
 
@@ -109,23 +109,28 @@
                            :output-func (if output-func-p
                                             output-func
                                             *output-func*))))
-      (push task (scrapycl/spider::%spider-queue spider)))))
+      (enq task
+           (scrapycl/spider::%spider-queue spider))
+      (values))))
 
 
 (declaim (ftype (function (scrapycl/core::spider
                            scrapycl/task::task)
-                          (values t &optional))
+                          (values (or list vector) &optional))
                 execute))
 
 (defun execute (spider task)
   (let ((object (task-object task)))
-    (with-simple-restart (continue "Skip processing ~A" object)
-      (let ((result (process spider
-                             object)))
-        (values result)))))
+    (values
+     (with-simple-restart (continue "Skip processing ~A" object)
+       (process spider
+                object)))))
 
 
 (defgeneric process (spider object)
+  (:documentation "Methods of this generic function should return and object or a list/array of object to be enqueued.
+
+                   This way processing of one web page can give a spider more tasks to process.")
   (:method :around ((spider t) (object t))
     (log:debug "Processing object" spider object)
     (with-log-unhandled ()
@@ -146,8 +151,8 @@
 
 (defmethod start ((spider spider) &key wait (output :list))
   (bt2:with-lock-held ((scrapycl/spider::%spider-queue-lock spider))
-    (setf (scrapycl/spider::%spider-queue spider)
-          nil))
+    (clear-queue (scrapycl/spider::%spider-queue spider))
+    (values))
     
   (uiop:while-collecting (collect-item)
     (let* ((output-is-function
