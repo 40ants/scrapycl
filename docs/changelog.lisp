@@ -7,24 +7,30 @@
 
 (defchangelog (:ignore-words ("SLY"
                               "ASDF"
+                              "SSL"
                               "REPL"
+                              "RETRY-REQUEST"
+                              "SCRAPYCL/DOWNLOADER"
+                              "DOWNLOADER"
+                              "SCRAPYCL"
                               "HTTP"))
   (0.2.0 2025-02-07
          "
 Changed
 =======
 
-These symbols are exported from SCRAPYCL package:
+These symbols are exported from SCRAPYCL:
 
-- SCRAPYCL:RESPONSE-URL
-- SCRAPYCL:RESPONSE-STATUS
-- SCRAPYCL:RESPONSE-BODY
-- SCRAPYCL:RESPONSE-HEADERS
+- [SCRAPYCL:RESPONSE-URL][reader SCRAPYCL:FETCH-ERROR]
+- [SCRAPYCL:RESPONSE-STATUS][reader SCRAPYCL:FETCH-ERROR]
+- [SCRAPYCL:RESPONSE-BODY][reader SCRAPYCL:FETCH-ERROR]
+- [SCRAPYCL:RESPONSE-HEADERS][reader SCRAPYCL:FETCH-ERROR]
 
 These are exported from SCRAPYCL/DOWNLOADER:
 
-- SCRAPYCL/DOWNLOADER:RETRY-REQUEST
-- SCRAPYCL/DOWNLOADER:RETRY-IF
+- [SCRAPYCL/DOWNLOADER:RETRY-REQUEST][function]
+- [SCRAPYCL/DOWNLOADER:RETRY-IF][function]
+
 
 Generic-function SCRAPYCL/DOWNLOADER:FETCH now has three optional arguments:
 
@@ -32,7 +38,7 @@ Generic-function SCRAPYCL/DOWNLOADER:FETCH now has three optional arguments:
 - CONTENT argument allows to send data to the server using these methods.
 - INSECURE argument allows to ignore broken SSL certificate of the server.
 
-Also, generic-function SCRAPYCL/DOWNLOADER:FETCH now setups SCRAPYCL/DOWNLOADER:RETRY-REQUEST restart
+Also, generic-function SCRAPYCL/DOWNLOADER:FETCH now setups `RETRY-REQUEST` restart
 which can be called using SCRAPYCL/DOWNLOADER:RETRY-REQUEST function.
 
 A function SCRAPYCL/DOWNLOADER:RETRY-IF was added to help call SCRAPYCL/DOWNLOADER:RETRY-REQUEST only
