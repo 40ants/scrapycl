@@ -7,6 +7,7 @@
                 #:request-url
                 #:fetch-error)
   (:import-from #:dex)
+  (:import-from #:log)
   (:export
    #:retry-request
    #:retry-if))

@@ -121,13 +121,16 @@
 
 (defun execute (spider task)
   (let ((object (task-object task)))
-    (with-simple-restart (continue "Skip processing ~A" object)
-      (let ((result (process spider
-                             object)))
-        (values result)))))
+    (values
+     (with-simple-restart (continue "Skip processing ~A" object)
+       (process spider
+                object)))))
 
 
 (defgeneric process (spider object)
+  (:documentation "Methods of this generic function should return and object or a list/array of object to be enqueued.
+
+                   This way processing of one web page can give a spider more tasks to process.")
   (:method :around ((spider t) (object t))
     (log:debug "Processing object" spider object)
     (with-log-unhandled ()
