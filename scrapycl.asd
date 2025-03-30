@@ -18,6 +18,7 @@
                "scrapycl/output/json"
                "scrapycl/output/typed"
                "scrapycl/types")
+  :components ((:file "engine"))
   :in-order-to ((test-op (test-op "scrapycl-tests"))))
 
 
