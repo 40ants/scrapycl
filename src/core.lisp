@@ -18,6 +18,7 @@
            #:response-body
            #:response-headers)
   (:export #:request-url
+           #:request-dont-filter
            #:request)
   (:export #:typed-output)
   (:export #:json-lines
