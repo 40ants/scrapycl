@@ -7,7 +7,8 @@
                 #:start
                 #:process
                 #:enqueue
-                #:request-url)
+                #:request-url
+                #:request-dont-filter)
   (:import-from #:scrapycl/spider)
   (:import-from #:scrapycl/task
                 #:task
@@ -53,7 +54,7 @@
              (setf (gethash url seen-urls)
                    t)))
       (declare (dynamic-extent #'seen-url-p))
-      
+
       (loop for task = (get-next-task spider)
             while task
             do (let* (;; It is important to have this var
@@ -74,9 +75,11 @@
                               ;; We need this block to not visit same URL twice and
                               ;; to break link loops:
                               (scrapycl/core:request
-                               (unless (seen-url-p (request-url object))
-                                 (register-url (request-url object))
-                                 (enqueue spider object)))
+                               (cond ((request-dont-filter object)
+                                      (enqueue spider object))
+                                     ((not (seen-url-p (request-url object)))
+                                      (register-url (request-url object))
+                                      (enqueue spider object))))
                               (t
                                (enqueue spider object)))))
                    (declare (dynamic-extent #'walk))
@@ -137,7 +140,7 @@
         (unless results
           (log:debug "Process didn't return new objects"))
         results)))
-  
+
   (:method ((spider t) (object t))
     (cond
       (*output-func*
@@ -152,7 +155,7 @@
   (bt2:with-lock-held ((scrapycl/spider::%spider-queue-lock spider))
     (clear-queue (scrapycl/spider::%spider-queue spider))
     (values))
-    
+
   (uiop:while-collecting (collect-item)
     (let* ((output-is-function
              (and output
