@@ -14,6 +14,14 @@
                               "DOWNLOADER"
                               "SCRAPYCL"
                               "HTTP"))
+    (0.2.1 2025-04-10
+           "
+
+Fixes
+=====
+
+`scrapycl:start` now properly returns objects without associated generic function.
+")
   (0.2.0 2025-02-07
          "
 Changed
