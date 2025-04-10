@@ -14,6 +14,14 @@
                               "DOWNLOADER"
                               "SCRAPYCL"
                               "HTTP"))
+    (0.2.1 2025-04-10
+           "
+Changed
+=======
+
+Added `request-dont-filter` slot to `scrapycl:request`, allowing repeated scraping of the
+same URL when set to T.
+")
   (0.2.0 2025-02-07
          "
 Changed
