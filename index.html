@@ -1,0 +1,599 @@
+<html lang=en>
+ <head>
+  <meta charset=UTF-8><meta name=viewport
+      content="width=device-width, initial-scale=1">
+  <title>scrapycl - The web scraping framework for writing crawlers in Common Lisp.</title>
+  <link rel=alternate
+        href="https://40ants.com/scrapycl/changelog.xml"
+        type="application/rss+xml">
+  <link rel=stylesheet type="text/css"
+        href=theme.css>
+  <script type="text/javascript" src=jquery.js></script>
+  <script type="text/javascript" src=toc.js></script>
+  <script type="text/javascript">$(document).ready(function() {$('a:has(img)').css('border-bottom', 'none')})</script>
+  <link rel=stylesheet type="text/css"
+      href=highlight.min.css>
+  <script type="text/javascript"
+          src=highlight.min.js></script>
+  <script type="text/javascript">hljs.highlightAll();</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FL71WXK73K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-FL71WXK73K');
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();
+       for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(42462884, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/42462884" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+ </head>
+ <body>
+  <div class=page><a id=fork-me href="https://github.com/40ants/scrapycl">Fork me on GitHub</a>
+   <div class=navbar>
+    <div class=navbar-inner>
+     <a class=brand href="/">
+      <img class=logo
+           src="https://40ants.com/img/logo.svg"></a>
+     <ul class=nav>
+      <li><a href="/posts/">Blog</a>
+      <li><a href="/ru/posts/">Blog (RU)</a>
+      <li><a href="/tips/">Lisp Tips</a>
+      <li><a href="/projects/">Our Projects</a>
+      <li><a href="/about/">About</a>
+     </ul>
+    </div>
+   </div>
+   <input type=checkbox id=sidebar-check>
+   <label for=sidebar-check>
+    <div id=sidebar-trigger>
+     <span></span><span></span><span></span>
+    </div></label><div class=sidebar><div class=header><form class=search method=GET action="search/">
+      <input type=text name=q>
+      <input type=submit value=Search><span id=search-progress></span>
+     </form>
+    </div><div class=content><div class=page-toc><ul><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-40INDEX-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-40INDEX-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">scrapycl - The web scraping framework for writing crawlers in Common Lisp.</a></p><ul><li><p><a href="#scrapycl-asdf-system-details" data-document="" data-node="scrapycl-asdf-system-details">SCRAPYCL ASDF System Details</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Installation</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40TUTORIAL-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40TUTORIAL-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Tutorial</a></p><ul><li><p><a href="#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40INTRO-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40INTRO-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Introduction</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40OUR-FIRST-SCRAPER-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40OUR-FIRST-SCRAPER-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Our First Scraper</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Extracting the Data</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-QUOTES-AND-AUTHORS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-QUOTES-AND-AUTHORS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Extracting Quotes and Authors (step2.lisp)</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40STORING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40STORING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Storing the Scraped Data</a></p><ul><li><p><a href="#custom-processing" data-document="" data-node="custom-processing">Custom processing</a></p></li></ul></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40FOLLOWING-LINKS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40FOLLOWING-LINKS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Following the Links</a></p></li></ul></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">API</a></p><ul><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">SCRAPYCL</a></p><ul><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Classes</a></p><ul><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24FETCH-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24FETCH-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">FETCH-ERROR</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24REQUEST-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24REQUEST-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">REQUEST</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SCRAPYCL-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SCRAPYCL-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">SCRAPYCL-ERROR</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SPIDER-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SPIDER-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">SPIDER</a></p></li></ul></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FGenerics-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FGenerics-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Generics</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Functions</a></p></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FTypes-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FTypes-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Types</a></p></li></ul></li><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-2FDOWNLOADER-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-2FDOWNLOADER-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">SCRAPYCL/DOWNLOADER</a></p><ul><li><p><a href="#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-2FDOWNLOADER-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="" data-node="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-2FDOWNLOADER-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">Functions</a></p></li></ul></li></ul></li></ul></li><li><p><a href="changelog/#x-28SCRAPYCL-DOCS-2FCHANGELOG-3A-40CHANGELOG-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29" data-document="changelog/" data-node="x-28SCRAPYCL-DOCS-2FCHANGELOG-3A-40CHANGELOG-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29">ChangeLog</a></p></li></ul>
+     </div>
+    </div><div class=footer>
+     <a href="https://40ants.com/doc">[generated by 40ANTS-DOC]</a>
+    </div>
+   </div><div class=content role=main><h1>scrapycl - The web scraping framework for writing crawlers in Common Lisp.<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-40INDEX-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-40INDEX-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h1><h2 id="scrapycl-asdf-system-details">SCRAPYCL ASDF System Details</h2><ul><li><p>Description: The web scraping framework for writing crawlers in Common Lisp.</p></li><li><p>Licence: Unlicense</p></li><li><p>Author: Alexander Artemenko &lt;svetlyak.40wt@gmail.com&gt;</p></li><li><p>Homepage: <a href="https://40ants.com/scrapycl/">https://40ants.com/scrapycl/</a></p></li><li><p>Bug tracker: <a href="https://github.com/40ants/scrapycl/issues">https://github.com/40ants/scrapycl/issues</a></p></li><li><p>Source control: <a href="https://github.com/40ants/scrapycl">GIT</a></p></li><li><p>Depends on: <a href="https://quickdocs.org/40ants-doc">40ants-doc</a>, <a href="https://quickdocs.org/alexandria">alexandria</a>, <a href="https://quickdocs.org/bordeaux-threads">bordeaux-threads</a>, <a href="https://quickdocs.org/closer-mop">closer-mop</a>, <a href="https://quickdocs.org/dexador">dexador</a>, <a href="https://quickdocs.org/log4cl">log4cl</a>, <a href="https://quickdocs.org/log4cl-extras">log4cl-extras</a>, <a href="https://quickdocs.org/lquery">lquery</a>, <a href="https://quickdocs.org/plump">plump</a>, <a href="https://quickdocs.org/quri">quri</a>, <a href="https://quickdocs.org/serapeum">serapeum</a>, <a href="https://quickdocs.org/spinneret">spinneret</a>, <a href="https://quickdocs.org/str">str</a>, <a href="https://quickdocs.org/yason">yason</a></p></li></ul><p><a href="https://github.com/40ants/scrapycl/actions"><img src="https://github-actions.40ants.com/40ants/scrapycl/matrix.svg?only=ci.run-tests"/></a></p><p><img src="http://quickdocs.org/badge/scrapycl.svg"/></p><h2>Installation<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40INSTALLATION-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h2><p>You can install this library from Quicklisp, but you want to receive updates quickly, then install it from Ultralisp.org:</p><pre><code class="">(ql-dist:install-dist &quot;http://dist.ultralisp.org/&quot;
+                      :prompt nil)
+(ql:quickload :scrapycl)</code></pre><h2>Tutorial<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40TUTORIAL-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40TUTORIAL-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h2><h3>Introduction<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40INTRO-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40INTRO-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><p>In this tutorial we'll train our parsing skill on this toy site: https://quotes.toscrape.com/.
+We will follow <a href="https://docs.scrapy.org/en/latest/intro/tutorial.html">Scrapy's tutorial</a> and see if we can get all the data using Scrapy<code>CL</code>.</p><p>You will find whole code for this tutorial in the <code>tutorial/</code> folder.</p><p>Firstly Scrapy tutorial shows us how to experiment with <code>HTTP</code> response in the <code>REPL</code>. But with Common Lisp we have much more sofisticated <code>REPL</code> out of the box. So we skip this step:</p><pre><code class="">scrapy shell &quot;https://quotes.toscrape.com/page/1/&quot;</code></pre><p>Right to the Common Lisp <code>REPL</code>!</p><h3>Our First Scraper<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40OUR-FIRST-SCRAPER-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40OUR-FIRST-SCRAPER-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><p>Scrapy<code>CL</code> is built around <code>CLOS</code>. Every scraping pipeline in this framework operates on <code>CLOS</code> objects.
+Most generic-functions accept a <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3ASPIDER-20CLASS-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3ASPIDER-20CLASS-29"><code>scrapycl:spider</code></a> object as a first argument. Also, requests to <code>HTML</code> pages are typed.
+This way you are telling to the framework how each page should be processed.</p><p>First thing we need to do is to define a class of the request to a page with quotes:</p><pre><code class="lisp">CL-USER&gt; (defclass quotes-page-request (scrapycl:request)
+           ())
+#&lt;STANDARD-CLASS COMMON-LISP-USER::QUOTES-PAGE-REQUEST&gt;
+</code></pre><p>Next, we define a class for the spider:</p><pre><code class="lisp">CL-USER&gt; (defclass quotes-spider (scrapycl:spider)
+           ()
+           (:default-initargs
+            :initial-requests (list (make-instance 'quotes-page-request
+                                                   :url &quot;https://quotes.toscrape.com/page/1/&quot;)
+                                    (make-instance 'quotes-page-request
+                                                   :url &quot;https://quotes.toscrape.com/page/2/&quot;))))</code></pre><p>Here we tell the spider to start from two initial pages.</p><p>Now it is time to make our first <code>HTTP</code> request and to see content of the page.
+I'll save the page's content to a variable to be able to play with parsing.</p><pre><code class="lisp">CL-USER&gt; (defparameter *response*
+           (scrapycl:fetch (make-instance 'quotes-spider)
+                           (make-instance 'quotes-page-request
+                                          :url &quot;https://quotes.toscrape.com/page/1/&quot;)))
+*RESPONSE*
+CL-USER&gt; *response*
+&quot;&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+	&lt;meta charset=&quot;UTF-8&quot;&gt;
+	&lt;title&gt;Quotes to Scrape&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/static/bootstrap.min.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/static/m...[sly-elided string of length 11011]&quot;</code></pre><p>The first version of the spider in Scrapy tutorial just saves a page's content into the file. Let's do the same but with Scrapy<code>CL</code>!</p><p>First, try to start our scraper:</p><pre><code class="">CL-USER&gt; (scrapycl:start (make-instance 'quotes-spider) :wait t)
+(#&lt;QUOTES-PAGE-REQUEST https://quotes.toscrape.com/page/2/&gt;
+ #&lt;QUOTES-PAGE-REQUEST https://quotes.toscrape.com/page/1/&gt;)</code></pre><p>It returns initial page requests as is because we didn't write a method for <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29"><code>scrapycl:process</code></a> generic-function. Now we'll define it to save content into the files:</p><pre><code class="">CL-USER&gt; (defmethod scrapycl:process ((spider quotes-spider)
+                             (request quotes-page-request))
+           (multiple-value-bind (data url)
+               (scrapycl:fetch spider request)
+             (let* ((page-number (third (str:split &quot;/&quot; (quri:uri-path  url))))
+                    (filename (format nil &quot;quotes-~A.html&quot; page-number)))
+               (alexandria:write-string-into-file data filename
+                                                  :if-exists :supersede)
+               (log:info &quot;Page saved to&quot; filename)
+               ;; return nothing, to stop processing
+               (values))))
+#&lt;STANDARD-METHOD SCRAPYCL:PROCESS (QUOTES-SPIDER QUOTES-PAGE-REQUEST) {1003CCD523}&gt;</code></pre><p>Next attempt to start the scraper will output information that data was saved to the files:</p><pre><code class="">CL-USER&gt; (scrapycl:start (make-instance 'quotes-spider) :wait t)
+ &lt;INFO&gt; [18:30:37] cl-user (process quotes-spider quotes-page-request) -
+  Page saved to FILENAME: &quot;quotes-2.html&quot; 
+ &lt;INFO&gt; [18:30:37] cl-user (process quotes-spider quotes-page-request) -
+  Page saved to FILENAME: &quot;quotes-1.html&quot; 
+NIL</code></pre><p>Now it is time to extract useful information out from these <code>HTML</code> pages.</p><h3>Extracting the Data<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><p>Where Scrapy shows iPython <code>REPL</code>:</p><pre><code class="">&gt;&gt;&gt; response.css(&quot;title::text&quot;).getall()
+['Quotes to Scrape']</code></pre><p>We have a full-featured Common Lisp <code>REPL</code>. For <code>HTML</code> parsing we'll use great <a href="https://shinmera.github.io/lquery/">lQuery library</a>. Here is how we can reproduce python code in Lisp using lquery <code>DSL</code>:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;title&quot;
+           (text))
+#(&quot;Quotes to Scrape&quot;)</code></pre><p>lQuery is parses data in a functional way. It has <a href="https://shinmera.github.io/lquery/">amazing documentation</a>. Take a moment and read it to understand the basic principles.</p><p>Then Python tutorial shows us what <code>getall</code> method returns:</p><pre><code class="">response.css(&quot;title&quot;).getall()
+['&lt;title&gt;Quotes to Scrape&lt;/title&gt;']</code></pre><p>With lisp we could do the same. Just drop <code>(text)</code> form at the end of the lquery pipeline:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;title&quot;)
+#(#&lt;PLUMP-DOM:ELEMENT title {1004CAAF43}&gt;)</code></pre><p>But this code returns us a set of <code>HTML</code> nodes. If you want to see the actual <code>HTML</code> code behind it,
+use <code>(serialize)</code> form:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;title&quot;
+           (serialize))
+#(&quot;&lt;title&gt;Quotes to Scrape&lt;/title&gt;&quot;)</code></pre><p>To get only a single item in Python you use <code>get</code> method instead of <code>getall</code>:</p><pre><code class="">&gt;&gt;&gt; response.css(&quot;title::text&quot;).get()
+'Quotes to Scrape'</code></pre><p>In Lisp use <code>lquery:$1</code> macro instead of <code>lquery:$</code>:</p><pre><code class="">CL-USER&gt; (lquery:$1
+           (initialize *response*)
+           &quot;title&quot;
+           (text))
+&quot;Quotes to Scrape&quot;</code></pre><p>You see, it returns a single object instead of an array!</p><p>As an alternative, you could’ve written in Python:</p><pre><code class="">&gt;&gt;&gt; response.css(&quot;title::text&quot;)[0].get()
+'Quotes to Scrape'</code></pre><p>In Lisp we can do the same:</p><pre><code class="">CL-USER&gt; (let* ((nodes (lquery:$
+                         (initialize *response*)
+                         &quot;title&quot;))
+                (title-node (elt nodes 0)))
+           (plump:text title-node))
+&quot;Quotes to Scrape&quot;</code></pre><p>There is no analogue to <code>re</code> from Scrapy in lQuery:</p><pre><code class="">&gt;&gt;&gt; response.css(&quot;title::text&quot;).re(r&quot;Quotes.*&quot;)
+['Quotes to Scrape']</code></pre><p>but you can use a filter function:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;title&quot;
+           (text)
+           (filter (lambda (text)
+                     (cl-ppcre:scan &quot;Quotes.*&quot; text))))
+#(&quot;Quotes to Scrape&quot;)</code></pre><p>Another example from Python code:</p><pre><code class="">&gt;&gt;&gt; response.css(&quot;title::text&quot;).re(r&quot;Q\w+&quot;)
+['Quotes']</code></pre><p>Becomes in Lisp:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;title&quot;
+           (text)
+           (each (lambda (text)
+                   (cl-ppcre:scan-to-strings &quot;Q\\w+&quot; text))
+                 :replace t))
+#(&quot;Quotes&quot;)</code></pre><p>And this Python code:</p><pre><code class="">&gt;&gt;&gt; response.css(&quot;title::text&quot;).re(r&quot;(\w+) to (\w+)&quot;)
+['Quotes', 'Scrape']</code></pre><p>becomes:</p><pre><code class="">CL-USER&gt; (lquery:$1
+           (initialize *response*)
+           &quot;title&quot;
+           (text)
+           (map (lambda (text)
+                  (nth-value 1
+                             (cl-ppcre:scan-to-strings &quot;(\\w+) to (\\w+)&quot;
+                                                       text)))))
+#(&quot;Quotes&quot; &quot;Scrape&quot;)</code></pre><h3>Extracting Quotes and Authors (step2.lisp)<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-QUOTES-AND-AUTHORS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40EXTRACTING-QUOTES-AND-AUTHORS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><p>We already have first page's content in the <code>*response*</code> variable. Now let's extract quotes!</p><p>Instead of this Python code:</p><pre><code class="">response.css(&quot;div.quote&quot;)
+[&lt;Selector query=&quot;descendant-or-self::div[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]&quot; data='&lt;div class=&quot;quote&quot; itemscope itemtype...'&gt;,
+&lt;Selector query=&quot;descendant-or-self::div[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]&quot; data='&lt;div class=&quot;quote&quot; itemscope itemtype...'&gt;,
+...]</code></pre><p>We can do this in Lisp:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;div.quote&quot;)
+#(#&lt;PLUMP-DOM:ELEMENT div {1002769EC3}&gt; #&lt;PLUMP-DOM:ELEMENT div {100276B153}&gt;
+  #&lt;PLUMP-DOM:ELEMENT div {100276C043}&gt; #&lt;PLUMP-DOM:ELEMENT div {100276D4A3}&gt;
+  #&lt;PLUMP-DOM:ELEMENT div {100984F243}&gt; #&lt;PLUMP-DOM:ELEMENT div {1009860F43}&gt;
+  #&lt;PLUMP-DOM:ELEMENT div {10098621D3}&gt; #&lt;PLUMP-DOM:ELEMENT div {1009862EF3}&gt;)</code></pre><p>Here is how we can to limit the number of items to not clutter the <code>REPL</code>. lQuery provides a <code>(function ...)</code> form where you can call any function you like. We'll use it to apply Serapeum's <code>take</code> function to cut only two first elements from the array of nodes:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;div.quote&quot;
+           (function
+            (lambda (nodes)
+             (serapeum:take 2 nodes))))
+#(#&lt;PLUMP-DOM:ELEMENT div {10028E1903}&gt; #&lt;PLUMP-DOM:ELEMENT div {10028E2B93}&gt;)</code></pre><p>Now it is easy to add <code>(serialize)</code> form and preview the extracted pieces:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;div.quote&quot;
+           (function
+            (lambda (nodes)
+             (serapeum:take 2 nodes)))
+           (serialize))
+#(&quot;&lt;div class=\&quot;quote\&quot; itemscope=\&quot;\&quot; itemtype=\&quot;http://schema.org/CreativeWork\&quot;&gt;
+        &lt;span class=\&quot;text\&quot; itemprop=\&quot;text\&quot;&gt;“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”&lt;/span&gt;
+        &lt;span&gt;by &lt;small class=\&quot;author\&quot; itemprop=\&quot;author\&quot;&gt;Albert Einstein&lt;/small&gt;
+        &lt;a href=\&quot;/author/Albert-Einstein\&quot;&gt;(about)&lt;/a&gt;
+        &lt;/span&gt;
+        &lt;div class=\&quot;tags\&quot;&gt;
+            Tags:
+            &lt;meta class=\&quot;keywords\&quot; itemprop=\&quot;keywords\&quot; content=\&quot;change,deep-thoughts,thinking,world\&quot;&gt;   &amp;gt; 
+            
+            &lt;a class=\&quot;tag\&quot; href=\&quot;/tag/change/page/1/\&quot;&gt;change&lt;/a&gt;
+            
+            &lt;a class=\&quot;tag\&quot; href=\&quot;/tag/deep-thoughts/page/1/\&quot;&gt;deep-thoughts&lt;/a&gt;
+            
+            &lt;a class=\&quot;tag\&quot; href=\&quot;/tag/thinking/page/1/\&quot;&gt;thinking&lt;/a&gt;
+            
+            &lt;a class=\&quot;tag\&quot; href=\&quot;/tag/world/page/1/\&quot;&gt;world&lt;/a&gt;
+            
+        &lt;/div&gt;
+    &lt;/div&gt;&quot;
+  &quot;&lt;div class=\&quot;quote\&quot; itemscope=\&quot;\&quot; itemtype=\&quot;http://schema.org/CreativeWork\&quot;&gt;
+        &lt;span class=\&quot;text\&quot; itemprop=\&quot;text\&quot;&gt;“It is our choices, Harry, that show what we truly are, far more than our abilities.”&lt;/span&gt;
+        &lt;span&gt;by &lt;small class=\&quot;author\&quot; itemprop=\&quot;author\&quot;&gt;J.K. Rowling&lt;/small&gt;
+        &lt;a href=\&quot;/author/J-K-Rowling\&quot;&gt;(about)&lt;/a&gt;
+        &lt;/span&gt;
+        &lt;div class=\&quot;tags\&quot;&gt;
+            Tags:
+            &lt;meta class=\&quot;keywords\&quot; itemprop=\&quot;keywords\&quot; content=\&quot;abilities,choices\&quot;&gt;   &amp;gt; 
+            
+            &lt;a class=\&quot;tag\&quot; href=\&quot;/tag/abilities/page/1/\&quot;&gt;abilities&lt;/a&gt;
+            
+            &lt;a class=\&quot;tag\&quot; href=\&quot;/tag/choices/page/1/\&quot;&gt;choices&lt;/a&gt;
+            
+        &lt;/div&gt;
+    &lt;/div&gt;&quot;)</code></pre><p>Now let's extract the first quote. Instead of this code in Python which sequentilly extracts quote node and then it's subelements:</p><pre><code class="">&gt;&gt;&gt; text = quote.css(&quot;span.text::text&quot;).get()
+&gt;&gt;&gt; text
+'“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”'
+&gt;&gt;&gt; author = quote.css(&quot;small.author::text&quot;).get()
+&gt;&gt;&gt; author
+'Albert Einstein'</code></pre><p>We will use the power of functional approach and extract all needed data in a single pipeline using lQuery's form <code>(combine ...)</code>:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;div.quote&quot;
+           (function
+            (lambda (nodes)
+             (serapeum:take 2 nodes)))
+           (combine
+            (lquery:$1
+              &quot;span.text&quot;
+              (text))
+            (lquery:$1
+              &quot;small.author&quot;
+              (text))))
+#((&quot;“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”&quot;
+   &quot;Albert Einstein&quot;)
+  (&quot;“It is our choices, Harry, that show what we truly are, far more than our abilities.”&quot;
+   &quot;J.K. Rowling&quot;))</code></pre><p>Note, this code we put after the <code>serapeum:take 2</code>:</p><pre><code class="">(combine
+ (lquery:$1
+   &quot;span.text&quot;
+   (text))
+ (lquery:$1
+   &quot;small.author&quot;
+   (text))))</code></pre><p>It allows us to extract two subelements of the <code>div.quote</code> node simultaneously, using function <code>combine</code>. These two pieces are combined into an array like:</p><pre><code class="">#(&quot;“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”&quot;
+   &quot;Albert Einstein&quot;)</code></pre><p>But because of functional nature of lQuery, this <code>combine</code> operation is applied to all <code>div.quote</code> nodes on the page and we don't have to write explicit iteration loop.</p><p>After that, original Scrapy's tutorial shows us how to extract tags list for each quote:</p><pre><code class="">&gt;&gt;&gt; tags = quote.css(&quot;div.tags a.tag::text&quot;).getall()
+&gt;&gt;&gt; tags
+['change', 'deep-thoughts', 'thinking', 'world']</code></pre><p>but knowing how does <code>combine</code> work, we can just add another rule into the <code>combine</code> form:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;div.quote&quot;
+           (function
+            (lambda (nodes)
+             (serapeum:take 2 nodes)))
+           (combine
+            (lquery:$1
+              &quot;span.text&quot;
+              (text))
+            (lquery:$1
+              &quot;small.author&quot;
+              (text))
+            (lquery:$
+              &quot;div.tags a.tag&quot;
+              (text))))
+#((&quot;“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”&quot;
+   &quot;Albert Einstein&quot; #(&quot;change&quot; &quot;deep-thoughts&quot; &quot;thinking&quot; &quot;world&quot;))
+  (&quot;“It is our choices, Harry, that show what we truly are, far more than our abilities.”&quot;
+   &quot;J.K. Rowling&quot; #(&quot;abilities&quot; &quot;choices&quot;)))</code></pre><p>Note, for tags we are using <code>lquery:$</code> because there is a list of them.</p><p>Scrapy's tutorial creates a hash table for each quote, but Scrapy<code>CL</code> framework's pipeline operates on <code>CLOS</code> objects. So, we'll create a separate <code>QUOTE-ITEM</code> class:</p><pre><code class="">CL-USER&gt; (defclass quote-item ()
+           ((text :initarg :text
+                  :type string
+                  :reader quote-text)
+            (author :initarg :author
+                    :type string
+                    :reader quote-author)
+            (tags :initarg :tags
+                  :type (serapeum:soft-list-of string)
+                  :reader quote-tags)))
+#&lt;STANDARD-CLASS COMMON-LISP-USER::QUOTE-ITEM&gt;
+
+CL-USER&gt; (defmethod print-object ((obj quote-item) stream)
+           (print-unreadable-object (obj stream :type t)
+             (format stream &quot;~A by ~A ~{#~A~^, ~}&quot;
+                     (quote-text obj)
+                     (quote-author obj)
+                     (quote-tags obj))))</code></pre><p>Now we'll use <code>map-apply</code> to transform parsed data into these <code>CLOS</code> objects:</p><pre><code class="">CL-USER&gt; (lquery:$
+           (initialize *response*)
+           &quot;div.quote&quot;
+           (function
+            (lambda (nodes)
+             (serapeum:take 2 nodes)))
+           (combine
+            (lquery:$1
+              &quot;span.text&quot;
+              (text))
+            (lquery:$1
+              &quot;small.author&quot;
+              (text))
+            (lquery:$
+              &quot;div.tags a.tag&quot;
+              (text)))
+           (map-apply
+            (lambda (text author tags)
+              (make-instance 'quote-item
+                             :text text
+                             :author author
+                             :tags (coerce tags 'list)))))
+#(#&lt;QUOTE-ITEM “The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.” by Albert Einstein #change, #deep-thoughts, #thinking, #world&gt;
+  #&lt;QUOTE-ITEM “It is our choices, Harry, that show what we truly are, far more than our abilities.” by J.K. Rowling #abilities, #choices&gt;)</code></pre><p>Put this piece of code into our method for <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29"><code>scrapycl:process</code></a> generic-function:</p><pre><code class="">CL-USER&gt; (defmethod scrapycl:process ((spider quotes-spider)
+                             (request quotes-page-request))
+           (let ((data (scrapycl:fetch spider request)))
+             (lquery:$
+               (initialize data)
+               &quot;div.quote&quot;
+               (combine
+                (lquery:$1
+                  &quot;span.text&quot;
+                  (text))
+                (lquery:$1
+                  &quot;small.author&quot;
+                  (text))
+                (lquery:$
+                  &quot;div.tags a.tag&quot;
+                  (text)))
+               (map-apply
+                (lambda (text author tags)
+                  (make-instance 'quote-item
+                                 :text text
+                                 :author author
+                                 :tags (coerce tags 'list)))))))</code></pre><p>And don't forget to remove this piece of code limiting the number of processed quotes:</p><pre><code class="">(function
+   (lambda (nodes)
+     (serapeum:take 2 nodes)))</code></pre><p>we needed it only for a debug purpose.</p><p>Now start our scraper:</p><pre><code class="">CL-USER&gt; (scrapycl:start (make-instance 'quotes-spider) :wait t)
+(#&lt;QUOTE-ITEM “Life is what happens to us while we are making other plans.” by Allen Saunders #fate, #life, #misattributed-john-lennon, #planning, #plans&gt;
+ #&lt;QUOTE-ITEM “Good friends, good books, and a sleepy conscience: this is the ideal life.” by Mark Twain #books, #contentment, #friends, #friendship, #life&gt;
+...</code></pre><p>As you can see, by default it returns a list of all items on the page, but in real world you will want this data to be saved or processed. In the next part we'll see how to do this.</p><h3>Storing the Scraped Data<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40STORING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40STORING-DATA-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><p>Scrapy's tutorial shows this command as example on how to save scraped data to a json file:</p><pre><code class="">scrapy crawl quotes -O quotes.json</code></pre><p>With Scrapy<code>CL</code> we can do the similar but with <code>OUTPUT</code> argument to the <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3ASTART-20GENERIC-FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3ASTART-20GENERIC-FUNCTION-29"><code>scrapycl:start</code></a> generic-function and <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AJSON-LINES-20FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AJSON-LINES-20FUNCTION-29"><code>scrapycl:json-lines</code></a> function:</p><pre><code class="">CL-USER&gt; (scrapycl:start (make-instance 'quotes-spider)
+                         :wait t
+                         :output (scrapycl:json-lines #P&quot;items.json&quot;))</code></pre><p>And content of <code>items.json</code> file will look like:</p><pre><code class="json">{&quot;text&quot;:&quot;“A day without sunshine is like, you know, night.”&quot;,&quot;author&quot;:&quot;Steve Martin&quot;,&quot;tags&quot;:[&quot;humor&quot;,&quot;obvious&quot;,&quot;simile&quot;]}
+{&quot;text&quot;:&quot;“A woman is like a tea bag; you never know how strong it is until it's in hot water.”&quot;,&quot;author&quot;:&quot;Eleanor Roosevelt&quot;,&quot;tags&quot;:[&quot;misattributed-eleanor-roosevelt&quot;]}</code></pre><p>Each object is on it's own line in a <a href="https://jsonlines.org/">JsonLines</a> format. If you want to get a <code>JSON</code> file with a list, then use <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AJSON-LIST-20FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AJSON-LIST-20FUNCTION-29"><code>scrapycl:json-list</code></a> instead. Or use <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AJSON-DICT-20FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AJSON-DICT-20FUNCTION-29"><code>scrapycl:json-dict</code></a> to get a file with <code>JSON</code> object. But beware, these two outputs can't work in <code>:APPEND</code> mode.</p><h4 id="custom-processing">Custom processing</h4><p>Actually, <code>OUTPUT</code> argument accepts any lisp function. The only requirements are:</p><ul><li><p>This function should accept a single argument. The objects for which there is no specialized method of <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29"><code>scrapycl:process</code></a> generic-function will be passed into this function.</p></li><li><p>It should accept <code>SCRAPYCL:STOP-OUTPUT</code> symbol and flush buffer, closing a file or a transaction, because this symbol is sent when all hrefs were processed and there is no more data to process.</p></li></ul><h3>Following the Links<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40FOLLOWING-LINKS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FTUTORIAL-3A-3A-40FOLLOWING-LINKS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><p>In Scrapy framework for following links you should yield a request object like this:</p><pre><code class="">yield scrapy.Request(next_page, callback=self.parse)</code></pre><p>With Scrapy<code>CL</code> to follow links, you need to return new request objects from your method for <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29"><code>scrapycl:process</code></a> generic-function. And because you are returning an object of a customized request class, you can add more data slots to the request to make this additional data available during request processing. For example, such data might include a parent category of the page or an some piece of data available on other page.</p><p>Scrapy's test site contains quotes and their authors. Let's make our scraper parse not only quotes but also their authors. See <code>tutorial/step3.lisp</code> file for the full code for this part.</p><p>First, we need to add an <code>AUTHOR-ITEM</code> class:</p><pre><code class="">CL-USER&gt; (defclass author-item ()
+           ((name :initarg :name
+                  :type string
+                  :reader author-name)
+            (birthday :initarg :birthday
+                      :type string
+                      :reader author-birthday)
+            (bio :initarg :bio
+                 :type string
+                 :reader author-bio)))
+#&lt;STANDARD-CLASS COMMON-LISP-USER::AUTHOR-ITEM&gt;
+
+CL-USER&gt; (defmethod print-object ((obj author-item) stream)
+           (print-unreadable-object (obj stream :type t)
+             (format stream &quot;~A&quot;
+                     (author-name obj))))
+#&lt;STANDARD-METHOD COMMON-LISP:PRINT-OBJECT (AUTHOR-ITEM T) {1003CD8723}&gt;</code></pre><p>Now let's make our spider do follow links leading to the next page and to the authors pages.</p><p>Here is how we can extract the link to the next page:</p><pre><code class="">CL-USER&gt; (lquery:$1
+           (initialize *response*)
+           &quot;ul.pager a&quot;
+           (attr &quot;href&quot;))
+&quot;/page/2/&quot;</code></pre><p>But we need an absolute <code>URL</code> for request. So we have to merge this path with a base <code>URL</code>.</p><p><a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29"><code>scrapycl:fetch</code></a> generic-function returns current page's real <code>URL</code> as a second value. Also, Scrapy<code>CL</code> provides a <code>MERGE-WITH-URL</code> lquery form. Together they can be used like this:</p><pre><code class="">CL-USER&gt; (multiple-value-bind (response base-url)
+             (scrapycl:fetch (make-instance 'quotes-spider)
+                             (make-instance 'quotes-page-request
+                                            :url &quot;https://quotes.toscrape.com/&quot;))
+           (lquery:$1
+             (initialize response)
+             &quot;ul.pager a&quot;
+             (attr &quot;href&quot;)
+             (merge-url-with base-url)))
+&quot;https://quotes.toscrape.com/page/2/&quot;</code></pre><p>It is better to use <code>URL</code> returned by <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29"><code>scrapycl:fetch</code></a> generic-function because of these two reasons:</p><ul><li><p>This <code>URL</code> can differ from original request <code>URL</code> because site might redirect request to the other page.</p></li><li><p>Href attributes on the page can be relative, like <code>../quotes/page/1</code> and will not work if you'll hardcode base url.</p></li></ul><p>Let's figure out which author pages should be followed. Original Scrapy tutorial uses this <code>CSS</code> selector <code>.author + a</code>, but lquery does not support <code>+</code> selector. To find a siblings of <code>.author</code> element but we can use <code>NEXT</code> form to select subsequent element following the <code>author</code> node:</p><pre><code class="">CL-USER&gt; (multiple-value-bind (response base-url)
+             (scrapycl:fetch (make-instance 'quotes-spider)
+                             (make-instance 'quotes-page-request
+                                            :url &quot;https://quotes.toscrape.com/&quot;))
+           (lquery:$
+             (initialize response)
+             &quot;.author&quot;
+             (next &quot;a&quot;)
+             (attr &quot;href&quot;)
+             (merge-url-with base-url)))
+#(&quot;https://quotes.toscrape.com/author/Albert-Einstein&quot;
+  &quot;https://quotes.toscrape.com/author/J-K-Rowling&quot;
+  &quot;https://quotes.toscrape.com/author/Albert-Einstein&quot;
+  &quot;https://quotes.toscrape.com/author/Jane-Austen&quot;
+  &quot;https://quotes.toscrape.com/author/Marilyn-Monroe&quot;
+  &quot;https://quotes.toscrape.com/author/Albert-Einstein&quot;
+  &quot;https://quotes.toscrape.com/author/Andre-Gide&quot;
+  &quot;https://quotes.toscrape.com/author/Thomas-A-Edison&quot;
+  &quot;https://quotes.toscrape.com/author/Eleanor-Roosevelt&quot;
+  &quot;https://quotes.toscrape.com/author/Steve-Martin&quot;)</code></pre><p>Ok, now, when we have a <code>URL</code>s to follow, let's modify our processing function to return them as new requests:</p><pre><code class="">CL-USER&gt; (defclass author-page-request (scrapycl:request)
+           ())
+#&lt;STANDARD-CLASS COMMON-LISP-USER::AUTHOR-PAGE-REQUEST&gt;
+
+
+CL-USER&gt; (defmethod scrapycl:process ((spider quotes-spider)
+                                      (request quotes-page-request))
+           (multiple-value-bind (data base-url)
+               (scrapycl:fetch spider request)
+             (log:info &quot;Fetched&quot; base-url)
+             
+             (let ((quotes (lquery:$
+                             (initialize data)
+                             &quot;div.quote&quot;
+                             (combine
+                              (lquery:$1
+                                &quot;span.text&quot;
+                                (text))
+                              (lquery:$1
+                                &quot;small.author&quot;
+                                (text))
+                              (lquery:$
+                                &quot;div.tags a.tag&quot;
+                                (text)))
+                             (map-apply
+                              (lambda (text author tags)
+                                (make-instance 'quote-item
+                                               :text text
+                                               :author author
+                                               :tags (coerce tags 'list))))))
+                   (next-page-url (lquery:$1
+                                    (initialize data)
+                                    &quot;ul.pager a&quot;
+                                    (attr &quot;href&quot;)
+                                    (merge-url-with base-url)))
+                   (author-urls (lquery:$
+                                  (initialize data)
+                                  &quot;.author&quot;
+                                  (next &quot;a&quot;)
+                                  (attr &quot;href&quot;)
+                                  (merge-url-with base-url))))
+               ;; Now return objects and new requests
+               (list quotes
+                     (map 'list (lambda (url)
+                                  (make-instance 'author-page-request
+                                                 :url url))
+                          author-urls)
+                     (when next-page-url
+                       (make-instance 'quotes-page-request
+                                      :url next-page-url))))))
+#&lt;STANDARD-METHOD SCRAPYCL:PROCESS (QUOTES-SPIDER QUOTES-PAGE-REQUEST) {1005E33C53}&gt;</code></pre><p>We return objects of three types from this processing method: quote-items, quotes-page-requests and author-page-requests.</p><p>Now if we will run our scraper, then we'll see it walks only through quotes pages and ignores author pages:</p><pre><code class="">CL-USER&gt; (scrapycl:start (make-instance 'quotes-spider)
+                         :wait t
+                         :output (scrapycl:json-lines #P&quot;items.json&quot;))
+ &lt;INFO&gt; [19:25:21] cl-user (process quotes-spider quotes-page-request) -
+  Fetched BASE-URL: #&lt;QURI.URI.HTTP:URI-HTTPS https://quotes.toscrape.com/page/1/&gt;
+  
+ &lt;INFO&gt; [19:25:21] cl-user (process quotes-spider quotes-page-request) -
+  Fetched BASE-URL: #&lt;QURI.URI.HTTP:URI-HTTPS https://quotes.toscrape.com/page/2/&gt;
+  
+NIL
+</code></pre><p>But in the file <code>items.json</code> you might see interesting records:</p><pre><code class="">{&quot;url&quot;:&quot;https://quotes.toscrape.com/author/Steve-Martin&quot;}
+{&quot;url&quot;:&quot;https://quotes.toscrape.com/author/Eleanor-Roosevelt&quot;}
+{&quot;url&quot;:&quot;https://quotes.toscrape.com/author/Thomas-A-Edison&quot;}
+{&quot;url&quot;:&quot;https://quotes.toscrape.com/author/Andre-Gide&quot;}
+...</code></pre><p>This is because we forgot to define a processing method for our class <code>AUTHOR-PAGE-REQUEST</code>. Scrapy<code>CL</code> sees objects without a processing method and decides these are final objects to be serialized to the output. Let's write a method to extract information about authors as well.</p><p>Here I've just translated these Python rules:</p><pre><code class="">def parse_author(self, response):
+    def extract_with_css(query):
+        return response.css(query).get(default=&quot;&quot;).strip()
+
+    yield {
+        &quot;name&quot;: extract_with_css(&quot;h3.author-title::text&quot;),
+        &quot;birthdate&quot;: extract_with_css(&quot;.author-born-date::text&quot;),
+        &quot;bio&quot;: extract_with_css(&quot;.author-description::text&quot;),
+    }</code></pre><p>into the lquery <code>DSL</code>:</p><pre><code class="">CL-USER&gt; (multiple-value-bind (response)
+             (scrapycl:fetch (make-instance 'quotes-spider)
+                             (make-instance 'author-page-request
+                                            :url &quot;https://quotes.toscrape.com/author/Thomas-A-Edison&quot;))
+           (lquery:$1
+             (initialize response)
+             (combine
+              (lquery:$1
+                &quot;h3.author-title&quot;
+                (text))
+              (lquery:$1
+                &quot;.author-born-date&quot;
+                (text))
+              (lquery:$1
+                &quot;.author-description&quot;
+                (text)
+                (map #'str:trim)))))
+
+(&quot;Thomas A. Edison&quot; &quot;February 11, 1847&quot;
+ &quot;Thomas Alva Edison was an American inventor, scientist and businessman who developed many devices that greatly influenced life around the world, including the phonograph, the motion picture camera, and a long-lasting, practical electric light bulb. Dubbed \&quot;The Wizard of Menlo Park\&quot; (now Edison, New Jersey) by a newspaper reporter, he was one of the first inventors to apply the principles of mass production and large teamwork to the process of invention, and therefore is often credited with the creation of the first industrial research laboratory.Edison is considered one of the most prolific inventors in history, holding 1,093 U.S. patents in his name, as well as many patents in the United Kingdom, France and Germany. He is credited with numerous inventions that contributed to mass communication and, in particular, telecommunications. His advanced work in these fields was an outgrowth of his early career as a telegraph operator. Edison originated the concept and implementation of electric-power generation and distribution to homes, businesses, and factories – a crucial development in the modern industrialized world. His first power station was on Manhattan Island, New York.&quot;)</code></pre><p>And here is the full processing method which will return an author object:</p><pre><code class="">CL-USER&gt; (defmethod scrapycl:process ((spider quotes-spider)
+                                      (request author-page-request))
+           (multiple-value-bind (data base-url)
+               (scrapycl:fetch spider request)
+             (log:info &quot;Fetched&quot; base-url)
+
+             (lquery:$1
+               (initialize data)
+               (combine
+                (lquery:$1
+                  &quot;h3.author-title&quot;
+                  (text))
+                (lquery:$1
+                  &quot;.author-born-date&quot;
+                  (text))
+                (lquery:$1
+                  &quot;.author-description&quot;
+                  (text)
+                  (map #'str:trim)))
+               (map-apply
+                (lambda (name birthday bio)
+                  (make-instance 'author-item
+                                 :name name
+                                 :birthday birthday
+                                 :bio bio))))))
+                                 
+#&lt;STANDARD-METHOD SCRAPYCL:PROCESS (QUOTES-SPIDER AUTHOR-PAGE-REQUEST) {10020C9733}&gt;</code></pre><p>Now, if you start the our spider again, you'll get quotes and authors mixed in the same <code>items.json</code> file.</p><p>But how to put different kinds of object into a different output files?</p><p>This is easy - just use a <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3ATYPED-OUTPUT-20FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3ATYPED-OUTPUT-20FUNCTION-29"><code>scrapycl:typed-output</code></a> function. This kind of output redirects items into another outputs depending on their type.</p><p>To separate output into <code>quotes.json</code> and <code>authors.json</code>, execute our scraper like this:</p><pre><code class="">CL-USER&gt; (scrapycl:start (make-instance 'quotes-spider)
+                         :wait t
+                         :output (scrapycl:typed-output
+                                  (list (cons 'quote-item
+                                              (scrapycl:json-lines #P&quot;quotes.json&quot;))
+                                        (cons 'author-item
+                                              (scrapycl:json-lines #P&quot;authors.json&quot;)))))
+ &lt;INFO&gt; [19:29:43] cl-user (process quotes-spider quotes-page-request) -
+  Fetched BASE-URL: #&lt;QURI.URI.HTTP:URI-HTTPS https://quotes.toscrape.com/page/2/&gt;
+  
+ &lt;INFO&gt; [19:29:43] cl-user (process quotes-spider quotes-page-request) -
+  Fetched BASE-URL: #&lt;QURI.URI.HTTP:URI-HTTPS https://quotes.toscrape.com/page/1/&gt;
+
+ ...
+  
+ &lt;INFO&gt; [19:29:48] cl-user (process quotes-spider quotes-page-request) -
+  Fetched BASE-URL: #&lt;QURI.URI.HTTP:URI-HTTPS https://quotes.toscrape.com/page/1/&gt;
+  
+NIL</code></pre><p>It will save each type of item in a separate file.</p><p>I hope this little introduction will urge you to try Scrapy<code>CL</code> for writing your own data scrapers! Feel free to share your ideas on the project's <a href="https://github.com/40ants/scrapycl/discussions">discussions page</a>.</p><h2>API<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40API-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h2><h3>SCRAPYCL<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/core.lisp#L1">package</a><div class=reference-object><div class=object-name><a href=#x-28-23A-28-288-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-22-29-20PACKAGE-29 id=x-28-23A-28-288-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-22-29-20PACKAGE-29>scrapycl</a></div></div><a class=bullet-link href=#x-28-23A-28-288-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-22-29-20PACKAGE-29></a></div></div><h4>Classes<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><h5>FETCH-ERROR<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24FETCH-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24FETCH-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h5><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/errors.lisp#L19">condition</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AFETCH-ERROR-20CONDITION-29 id=x-28SCRAPYCL-3AFETCH-ERROR-20CONDITION-29>scrapycl:fetch-error</a></div><div class=object-args><span class=locative-args></span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AFETCH-ERROR-20CONDITION-29></a></div><div class=bullet-content><p>This condition is signalled when <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29"><code>scrapycl:fetch</code></a> generic-function gets non 200 status code.</p></div></div><p><b>Readers</b></p><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/errors.lisp#L19">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3ARESPONSE-BODY-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29 id=x-28SCRAPYCL-3ARESPONSE-BODY-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29>scrapycl:response-body</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:body)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3ARESPONSE-BODY-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/errors.lisp#L19">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3ARESPONSE-HEADERS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29 id=x-28SCRAPYCL-3ARESPONSE-HEADERS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29>scrapycl:response-headers</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:headers)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3ARESPONSE-HEADERS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/errors.lisp#L19">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3ARESPONSE-STATUS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29 id=x-28SCRAPYCL-3ARESPONSE-STATUS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29>scrapycl:response-status</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:status)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3ARESPONSE-STATUS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/errors.lisp#L19">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3ARESPONSE-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29 id=x-28SCRAPYCL-3ARESPONSE-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29>scrapycl:response-url</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:url)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3ARESPONSE-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29></a></div></div><h5>REQUEST<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24REQUEST-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24REQUEST-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h5><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/request.lisp#L10">class</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AREQUEST-20CLASS-29 id=x-28SCRAPYCL-3AREQUEST-20CLASS-29>scrapycl:request</a></div><div class=object-args><span class=locative-args></span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AREQUEST-20CLASS-29></a></div></div><p><b>Readers</b></p><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/request.lisp#L11">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AREQUEST-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AREQUEST-29-29 id=x-28SCRAPYCL-3AREQUEST-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AREQUEST-29-29>scrapycl:request-url</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:URL = (ERROR &quot;Please, provide :URL argument.&quot;))</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AREQUEST-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AREQUEST-29-29></a></div><div class=bullet-content><p><a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AURL-20-28TYPE-29-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AURL-20-28TYPE-29-29"><code>url</code></a> to fetch data from.</p></div></div><h5>SCRAPYCL-ERROR<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SCRAPYCL-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SCRAPYCL-ERROR-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h5><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/errors.lisp#L14">condition</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3ASCRAPYCL-ERROR-20CONDITION-29 id=x-28SCRAPYCL-3ASCRAPYCL-ERROR-20CONDITION-29>scrapycl:scrapycl-error</a></div><div class=object-args><span class=locative-args></span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3ASCRAPYCL-ERROR-20CONDITION-29></a></div><div class=bullet-content><p>Base class for all Scrapy<code>CL</code> errors.</p></div></div><h5>SPIDER<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SPIDER-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24SPIDER-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h5><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L24">class</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3ASPIDER-20CLASS-29 id=x-28SCRAPYCL-3ASPIDER-20CLASS-29>scrapycl:spider</a></div><div class=object-args><span class=locative-args></span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3ASPIDER-20CLASS-29></a></div></div><p><b>Readers</b></p><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L32">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25INITIAL-REQUESTS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29 id=x-28SCRAPYCL-2FSPIDER-3A-3A-25INITIAL-REQUESTS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29>scrapycl/spider::%initial-requests</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(:initial-requests = nil)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25INITIAL-REQUESTS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L25">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29 id=x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29>scrapycl/spider::%spider-queue</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(= (queue))</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L28">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29 id=x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29>scrapycl/spider::%spider-queue-lock</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(= (MAKE-LOCK :NAME &quot;Scrapycl Queue Lock&quot;))</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L30">reader</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-THREAD-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29 id=x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-THREAD-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29>scrapycl/spider::%spider-thread</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(= nil)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-THREAD-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3ASPIDER-29-29></a></div></div><p><b>Accessors</b></p><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L25">accessor</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29 id=x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29>scrapycl/spider::%spider-queue</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(= (queue))</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L28">accessor</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29 id=x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29>scrapycl/spider::%spider-queue-lock</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(= (MAKE-LOCK :NAME &quot;Scrapycl Queue Lock&quot;))</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-QUEUE-LOCK-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L30">accessor</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-THREAD-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29 id=x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-THREAD-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29>scrapycl/spider::%spider-thread</a></div><div class=object-args><span class=locative-args></span><span class=locative-args>(= nil)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FSPIDER-3A-3A-25SPIDER-THREAD-20-2840ANTS-DOC-2FLOCATIVES-3AACCESSOR-20SCRAPYCL-3ASPIDER-29-29></a></div></div><h4>Generics<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FGenerics-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FGenerics-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/downloader.lisp#L20">generic-function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29 id=x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29>scrapycl:fetch</a></div><div class=object-args><span class=locative-args>spider request &amp;key method content max-redirects timeout custom-headers insecure</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29></a></div><div class=bullet-content><p>Fetches page from request's <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AURL-20-28TYPE-29-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AURL-20-28TYPE-29-29"><code>url</code></a>.</p><p>Returns a multiple values:</p><ul><li><p>A string with <code>HTML</code> response.</p></li><li><p><a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AURL-20-28TYPE-29-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AURL-20-28TYPE-29-29"><code>url</code></a> from which response was received. Might be different from original <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AURL-20-28TYPE-29-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AURL-20-28TYPE-29-29"><code>url</code></a> because of redirects.</p></li><li><p>A hash-table with reponse <code>HTTP</code> headers.</p></li></ul></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/engine.lisp#L129">generic-function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29 id=x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29>scrapycl:process</a></div><div class=object-args><span class=locative-args>spider object</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29></a></div><div class=bullet-content><p>Methods of this generic function should return and object or a list/array of object to be enqueued.</p><p>This way processing of one web page can give a spider more tasks to process.</p></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/spider.lisp#L38">generic-function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3ASTART-20GENERIC-FUNCTION-29 id=x-28SCRAPYCL-3ASTART-20GENERIC-FUNCTION-29>scrapycl:start</a></div><div class=object-args><span class=locative-args>spider &amp;key wait output &amp;allow-other-keys</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3ASTART-20GENERIC-FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/output/json.lisp#L20">generic-function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AWRITE-AS-JSON-20GENERIC-FUNCTION-29 id=x-28SCRAPYCL-3AWRITE-AS-JSON-20GENERIC-FUNCTION-29>scrapycl:write-as-json</a></div><div class=object-args><span class=locative-args>object stream</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AWRITE-AS-JSON-20GENERIC-FUNCTION-29></a></div></div><h4>Functions<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/engine.lisp#L104">function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AENQUEUE-20FUNCTION-29 id=x-28SCRAPYCL-3AENQUEUE-20FUNCTION-29>scrapycl:enqueue</a></div><div class=object-args><span class=locative-args>spider object &amp;key (output-func nil scrapycl/engine::output-func-p)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AENQUEUE-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/output/json.lisp#L146">function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AJSON-DICT-20FUNCTION-29 id=x-28SCRAPYCL-3AJSON-DICT-20FUNCTION-29>scrapycl:json-dict</a></div><div class=object-args><span class=locative-args>FILENAME &amp;KEY (KEY &quot;items&quot;)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AJSON-DICT-20FUNCTION-29></a></div><div class=bullet-content><p>Creates an &quot;output&quot; callback for serializing objects as a list inside a <code>JSON</code> dictionary.</p></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/output/json.lisp#L113">function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AJSON-LINES-20FUNCTION-29 id=x-28SCRAPYCL-3AJSON-LINES-20FUNCTION-29>scrapycl:json-lines</a></div><div class=object-args><span class=locative-args>filename &amp;key (if-exists :supersede)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AJSON-LINES-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/output/json.lisp#L124">function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AJSON-LIST-20FUNCTION-29 id=x-28SCRAPYCL-3AJSON-LIST-20FUNCTION-29>scrapycl:json-list</a></div><div class=object-args><span class=locative-args>filename</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AJSON-LIST-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/utils.lisp#L82">function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3APREVIEW-20FUNCTION-29 id=x-28SCRAPYCL-3APREVIEW-20FUNCTION-29>scrapycl:preview</a></div><div class=object-args><span class=locative-args>nodes</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3APREVIEW-20FUNCTION-29></a></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/output/typed.lisp#L16">function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3ATYPED-OUTPUT-20FUNCTION-29 id=x-28SCRAPYCL-3ATYPED-OUTPUT-20FUNCTION-29>scrapycl:typed-output</a></div><div class=object-args><span class=locative-args>type-to-output-alist</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-3ATYPED-OUTPUT-20FUNCTION-29></a></div></div><h4>Types<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FTypes-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FTypes-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/types.lisp#L8">type</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-3AURL-20-28TYPE-29-29 id=x-28SCRAPYCL-3AURL-20-28TYPE-29-29>scrapycl:url</a></div></div><a class=bullet-link href=#x-28SCRAPYCL-3AURL-20-28TYPE-29-29></a></div><div class=bullet-content><p>Represents a <a href="https://40ants.com/scrapycl/#x-28SCRAPYCL-3AURL-20-28TYPE-29-29" data-document="https://40ants.com/scrapycl/" data-node="x-28SCRAPYCL-3AURL-20-28TYPE-29-29"><code>url</code></a>.</p><pre><code class="">STRING</code></pre></div></div><h3>SCRAPYCL/DOWNLOADER<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-2FDOWNLOADER-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-2FDOWNLOADER-3FPACKAGE-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h3><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/downloader.lisp#L1">package</a><div class=reference-object><div class=object-name><a href=#x-28-23A-28-2819-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-2FDOWNLOADER-22-29-20PACKAGE-29 id=x-28-23A-28-2819-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-2FDOWNLOADER-22-29-20PACKAGE-29>scrapycl/downloader</a></div></div><a class=bullet-link href=#x-28-23A-28-2819-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-2FDOWNLOADER-22-29-20PACKAGE-29></a></div></div><h4>Functions<a class=header-link
+     href=#x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-2FDOWNLOADER-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29
+     title="Permalink to this headline"
+     id=x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-2FDOWNLOADER-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29></a></h4><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/downloader.lisp#L74">function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FDOWNLOADER-3ARETRY-IF-20FUNCTION-29 id=x-28SCRAPYCL-2FDOWNLOADER-3ARETRY-IF-20FUNCTION-29>scrapycl/downloader:retry-if</a></div><div class=object-args><span class=locative-args>predicate &amp;key (times 3) (delay 1) (max-delay (\* 10 60)) (multiplicator 2)</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FDOWNLOADER-3ARETRY-IF-20FUNCTION-29></a></div><div class=bullet-content><p>Call retry-request restart is predicate returns T and with exponential delay.</p></div></div><div class=reference-bullet><div class=reference-bullet-header><a class=locative-type href="https://github.com/40ants/scrapycl/blob/706bf46a521c453162e14b762270f2bb056a497c/src/downloader.lisp#L67">function</a><div class=reference-object><div class=object-name><a href=#x-28SCRAPYCL-2FDOWNLOADER-3ARETRY-REQUEST-20FUNCTION-29 id=x-28SCRAPYCL-2FDOWNLOADER-3ARETRY-REQUEST-20FUNCTION-29>scrapycl/downloader:retry-request</a></div><div class=object-args><span class=locative-args>e</span></div></div><a class=bullet-link href=#x-28SCRAPYCL-2FDOWNLOADER-3ARETRY-REQUEST-20FUNCTION-29></a></div><div class=bullet-content><p>Call retry-request restart unconditionally and without delay.</p></div></div>
+   </div><div class=footer>
+    <hr class=separator>
+    <p class=fineprint>Created with passion by <em>40Ants</em><a class=lisp-logo
+     href="http://lisp-lang.org/">
+      <img
+           src="https://40ants.com/img/made-with-lisp.svg"></a>
+   </div>
+  </div>
+ </body>
+</html>
