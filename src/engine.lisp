@@ -27,6 +27,9 @@
                 #:->))
 (in-package #:scrapycl/engine)
 
+(defvar *output-func* nil
+  "This variable will be bound to a current tasks's output function. This way, when somebody enqueues an object and don't specifies an output func, then the parent task output func will be used. This way you can specify output in the START func and it will be used to process all items which has no specific method for SCRAPYCL:PROCESS generic-function.")
+
 
 (declaim (ftype (function (scrapycl/core::spider)
                           (values (or null task) &optional))
@@ -96,10 +99,6 @@
             (bt2:make-thread #'process-tasks-wrapper
                              :name "Scrapycl Processor"))))
   (values))
-
-
-(defvar *output-func* nil
-  "This variable will be bound to a current tasks's output function. This way, when somebody enqueues an object and don't specifies an output func, then the parent task output func will be used. This way you can specify output in the START func and it will be used to process all items which has no specific method for SCRAPYCL:PROCESS generic-function.")
 
 
 (defun enqueue (spider object &key (output-func nil output-func-p))
