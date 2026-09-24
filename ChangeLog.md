@@ -12,6 +12,13 @@
 
 `scrapycl:start` now properly returns objects without associated generic function.
 
+<a id="changed"></a>
+
+### Changed
+
+Added `:dont-filter` option and `scrapycl:request-dont-filter-p` reader to
+`scrapycl:request`, allowing repeated processing of the same `URL` when set to T.
+
 <a id="x-28SCRAPYCL-DOCS-2FCHANGELOG-3A-3A-7C0-2E2-2E0-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
 ## 0.2.0 (2025-02-07)
