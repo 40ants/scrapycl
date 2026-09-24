@@ -13,6 +13,7 @@
                               "SCRAPYCL/DOWNLOADER"
                               "DOWNLOADER"
                               "SCRAPYCL"
+                              "URL"
                               "HTTP"))
     (0.2.1 2025-04-10
            "
