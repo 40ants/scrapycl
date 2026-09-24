@@ -3,6 +3,7 @@
   (:import-from #:scrapycl/core
                 #:request
                 #:request-url
+                #:request-dont-filter-p
                 #:url))
 (in-package #:scrapycl/request)
 
@@ -12,7 +13,12 @@
         :type url
         :initform (error "Please, provide :URL argument.")
         :reader request-url
-        :documentation "URL to fetch data from.")))
+        :documentation "URL to fetch data from.")
+   (dont-filter :initarg :dont-filter
+                :type boolean
+                :initform nil
+                :reader request-dont-filter-p
+                :documentation "Process this request even if its URL was already processed.")))
 
 
 (defmethod print-object ((obj request) stream)
