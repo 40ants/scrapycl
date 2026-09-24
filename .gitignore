@@ -6,3 +6,8 @@
 *.fasl
 *.html
 *.json
+
+
+# APM dependencies
+apm_modules/
+.agents/

@@ -42,6 +42,14 @@ We will follow [Scrapy's tutorial][b2a5] and see if we can get all the data usin
 
 You will find whole code for this tutorial in the `tutorial/` folder.
 
+The scraping pipeline is the core of the framework:
+
+1. You send request objects to the pipeline.
+2. The corresponding scrapycl:process methods process them.
+3. These methods can use any parsing tool; the examples in this tutorial use lquery.
+4. Each method can return new request objects or other `CLOS` objects to be stored in the specified output.
+5. Any new requests are processed starting from step 1.
+
 Firstly Scrapy tutorial shows us how to experiment with `HTTP` response in the `REPL`. But with Common Lisp we have much more sofisticated `REPL` out of the box. So we skip this step:
 
 ```
