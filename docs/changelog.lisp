@@ -24,8 +24,8 @@ Fixes
 Changed
 =======
 
-Added `request-dont-filter` slot to `scrapycl:request`, allowing repeated scraping of the
-same URL when set to T.
+Added `:dont-filter` option and `scrapycl:request-dont-filter-p` reader to
+`scrapycl:request`, allowing repeated processing of the same URL when set to T.
 ")
   (0.2.0 2025-02-07
          "

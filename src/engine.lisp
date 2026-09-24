@@ -8,7 +8,7 @@
                 #:process
                 #:enqueue
                 #:request-url
-                #:request-dont-filter)
+                #:request-dont-filter-p)
   (:import-from #:scrapycl/spider)
   (:import-from #:scrapycl/task
                 #:task
@@ -75,7 +75,7 @@
                               ;; We need this block to not visit same URL twice and
                               ;; to break link loops:
                               (scrapycl/core:request
-                               (cond ((request-dont-filter object)
+                               (cond ((request-dont-filter-p object)
                                       (enqueue spider object))
                                      ((not (seen-url-p (request-url object)))
                                       (register-url (request-url object))
