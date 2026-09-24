@@ -847,7 +847,7 @@ I hope this little introduction will urge you to try Scrapy`CL` for writing your
 
 <a id="x-28-23A-28-288-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-22-29-20PACKAGE-29"></a>
 
-#### [package](38d2) `scrapycl`
+#### [package](cc27) `scrapycl`
 
 <a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FClasses-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -859,7 +859,7 @@ I hope this little introduction will urge you to try Scrapy`CL` for writing your
 
 <a id="x-28SCRAPYCL-3AFETCH-ERROR-20CONDITION-29"></a>
 
-###### [condition](f39a) `scrapycl:fetch-error` (scrapycl-error)
+###### [condition](50d7) `scrapycl:fetch-error` (scrapycl-error)
 
 This condition is signalled when [`scrapycl:fetch`][1128] generic-function gets non 200 status code.
 
@@ -867,19 +867,19 @@ This condition is signalled when [`scrapycl:fetch`][1128] generic-function gets 
 
 <a id="x-28SCRAPYCL-3ARESPONSE-BODY-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29"></a>
 
-###### [reader](f39a) `scrapycl:response-body` (fetch-error) (:body)
+###### [reader](50d7) `scrapycl:response-body` (fetch-error) (:body)
 
 <a id="x-28SCRAPYCL-3ARESPONSE-HEADERS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29"></a>
 
-###### [reader](f39a) `scrapycl:response-headers` (fetch-error) (:headers)
+###### [reader](50d7) `scrapycl:response-headers` (fetch-error) (:headers)
 
 <a id="x-28SCRAPYCL-3ARESPONSE-STATUS-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29"></a>
 
-###### [reader](f39a) `scrapycl:response-status` (fetch-error) (:status)
+###### [reader](50d7) `scrapycl:response-status` (fetch-error) (:status)
 
 <a id="x-28SCRAPYCL-3ARESPONSE-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AFETCH-ERROR-29-29"></a>
 
-###### [reader](f39a) `scrapycl:response-url` (fetch-error) (:url)
+###### [reader](50d7) `scrapycl:response-url` (fetch-error) (:url)
 
 <a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-40SCRAPYCL-24REQUEST-3FCLASS-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -887,13 +887,13 @@ This condition is signalled when [`scrapycl:fetch`][1128] generic-function gets 
 
 <a id="x-28SCRAPYCL-3AREQUEST-20CLASS-29"></a>
 
-###### [class](5e53) `scrapycl:request` ()
+###### [class](d04b) `scrapycl:request` ()
 
 **Readers**
 
 <a id="x-28SCRAPYCL-3AREQUEST-URL-20-2840ANTS-DOC-2FLOCATIVES-3AREADER-20SCRAPYCL-3AREQUEST-29-29"></a>
 
-###### [reader](e188) `scrapycl:request-url` (request) (:URL = (ERROR "Please, provide :URL argument."))
+###### [reader](427f) `scrapycl:request-url` (request) (:URL = (ERROR "Please, provide :URL argument."))
 
 [`url`][9cc7] to fetch data from.
 
@@ -903,7 +903,7 @@ This condition is signalled when [`scrapycl:fetch`][1128] generic-function gets 
 
 <a id="x-28SCRAPYCL-3ASCRAPYCL-ERROR-20CONDITION-29"></a>
 
-###### [condition](6cf0) `scrapycl:scrapycl-error` (error)
+###### [condition](4260) `scrapycl:scrapycl-error` (error)
 
 Base class for all Scrapy`CL` errors.
 
@@ -913,7 +913,7 @@ Base class for all Scrapy`CL` errors.
 
 <a id="x-28SCRAPYCL-3ASPIDER-20CLASS-29"></a>
 
-###### [class](ab27) `scrapycl:spider` ()
+###### [class](ef2c) `scrapycl:spider` ()
 
 <a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FGenerics-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -921,7 +921,7 @@ Base class for all Scrapy`CL` errors.
 
 <a id="x-28SCRAPYCL-3AFETCH-20GENERIC-FUNCTION-29"></a>
 
-##### [generic-function](e28f) `scrapycl:fetch` spider request &key method content max-redirects timeout custom-headers insecure
+##### [generic-function](16e0) `scrapycl:fetch` spider request &key method content max-redirects timeout custom-headers insecure
 
 Fetches page from request's [`url`][9cc7].
 
@@ -933,7 +933,7 @@ Returns a multiple values:
 
 <a id="x-28SCRAPYCL-3APROCESS-20GENERIC-FUNCTION-29"></a>
 
-##### [generic-function](ec68) `scrapycl:process` spider object
+##### [generic-function](02cc) `scrapycl:process` spider object
 
 Methods of this generic function should return and object or a list/array of object to be enqueued.
 
@@ -941,11 +941,11 @@ This way processing of one web page can give a spider more tasks to process.
 
 <a id="x-28SCRAPYCL-3ASTART-20GENERIC-FUNCTION-29"></a>
 
-##### [generic-function](57cd) `scrapycl:start` spider &key wait output &allow-other-keys
+##### [generic-function](a0d9) `scrapycl:start` spider &key wait output &allow-other-keys
 
 <a id="x-28SCRAPYCL-3AWRITE-AS-JSON-20GENERIC-FUNCTION-29"></a>
 
-##### [generic-function](e468) `scrapycl:write-as-json` object stream
+##### [generic-function](6ca8) `scrapycl:write-as-json` object stream
 
 <a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -953,29 +953,29 @@ This way processing of one web page can give a spider more tasks to process.
 
 <a id="x-28SCRAPYCL-3AENQUEUE-20FUNCTION-29"></a>
 
-##### [function](e3f5) `scrapycl:enqueue` spider object &key (output-func nil scrapycl/engine::output-func-p)
+##### [function](3d6e) `scrapycl:enqueue` spider object &key (output-func nil scrapycl/engine::output-func-p)
 
 <a id="x-28SCRAPYCL-3AJSON-DICT-20FUNCTION-29"></a>
 
-##### [function](0bcd) `scrapycl:json-dict` FILENAME &KEY (KEY "items")
+##### [function](9c7a) `scrapycl:json-dict` FILENAME &KEY (KEY "items")
 
 Creates an "output" callback for serializing objects as a list inside a `JSON` dictionary.
 
 <a id="x-28SCRAPYCL-3AJSON-LINES-20FUNCTION-29"></a>
 
-##### [function](dff5) `scrapycl:json-lines` filename &key (if-exists :supersede)
+##### [function](a7ce) `scrapycl:json-lines` filename &key (if-exists :supersede)
 
 <a id="x-28SCRAPYCL-3AJSON-LIST-20FUNCTION-29"></a>
 
-##### [function](27e2) `scrapycl:json-list` filename
+##### [function](d0f3) `scrapycl:json-list` filename
 
 <a id="x-28SCRAPYCL-3APREVIEW-20FUNCTION-29"></a>
 
-##### [function](4c71) `scrapycl:preview` nodes
+##### [function](b8a2) `scrapycl:preview` nodes
 
 <a id="x-28SCRAPYCL-3ATYPED-OUTPUT-20FUNCTION-29"></a>
 
-##### [function](d978) `scrapycl:typed-output` type-to-output-alist
+##### [function](de8d) `scrapycl:typed-output` type-to-output-alist
 
 <a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-3FTypes-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -983,7 +983,7 @@ Creates an "output" callback for serializing objects as a list inside a `JSON` d
 
 <a id="x-28SCRAPYCL-3AURL-20-28TYPE-29-29"></a>
 
-##### [type](bb1d) `scrapycl:url`
+##### [type](bed5) `scrapycl:url`
 
 Represents a [`url`][9cc7].
 
@@ -996,7 +996,7 @@ STRING
 
 <a id="x-28-23A-28-2819-29-20BASE-CHAR-20-2E-20-22SCRAPYCL-2FDOWNLOADER-22-29-20PACKAGE-29"></a>
 
-#### [package](cb34) `scrapycl/downloader`
+#### [package](5f69) `scrapycl/downloader`
 
 <a id="x-28SCRAPYCL-DOCS-2FINDEX-3A-3A-7C-40SCRAPYCL-2FDOWNLOADER-3FFunctions-SECTION-7C-2040ANTS-DOC-2FLOCATIVES-3ASECTION-29"></a>
 
@@ -1004,13 +1004,13 @@ STRING
 
 <a id="x-28SCRAPYCL-2FDOWNLOADER-3ARETRY-IF-20FUNCTION-29"></a>
 
-##### [function](7c7c) `scrapycl/downloader:retry-if` predicate &key (times 3) (delay 1) (max-delay (\* 10 60)) (multiplicator 2)
+##### [function](80e3) `scrapycl/downloader:retry-if` predicate &key (times 3) (delay 1) (max-delay (\* 10 60)) (multiplicator 2)
 
 Call retry-request restart is predicate returns T and with exponential delay.
 
 <a id="x-28SCRAPYCL-2FDOWNLOADER-3ARETRY-REQUEST-20FUNCTION-29"></a>
 
-##### [function](a0ff) `scrapycl/downloader:retry-request` e
+##### [function](1be6) `scrapycl/downloader:retry-request` e
 
 Call retry-request restart unconditionally and without delay.
 
@@ -1028,26 +1028,26 @@ Call retry-request restart unconditionally and without delay.
 [b2a5]: https://docs.scrapy.org/en/latest/intro/tutorial.html
 [66a8]: https://github.com/40ants/scrapycl
 [5d38]: https://github.com/40ants/scrapycl/actions
-[38d2]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/core.lisp#L1
-[cb34]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/downloader.lisp#L1
-[e28f]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/downloader.lisp#L20
-[a0ff]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/downloader.lisp#L67
-[7c7c]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/downloader.lisp#L74
-[e3f5]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/engine.lisp#L104
-[ec68]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/engine.lisp#L129
-[6cf0]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/errors.lisp#L14
-[f39a]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/errors.lisp#L19
-[dff5]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/output/json.lisp#L113
-[27e2]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/output/json.lisp#L124
-[0bcd]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/output/json.lisp#L146
-[e468]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/output/json.lisp#L20
-[d978]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/output/typed.lisp#L16
-[5e53]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/request.lisp#L10
-[e188]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/request.lisp#L11
-[ab27]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/spider.lisp#L24
-[57cd]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/spider.lisp#L38
-[bb1d]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/types.lisp#L8
-[4c71]: https://github.com/40ants/scrapycl/blob/0665183018064a6341fd22d97a83b4c674da8b63/src/utils.lisp#L82
+[cc27]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/core.lisp#L1
+[5f69]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/downloader.lisp#L1
+[16e0]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/downloader.lisp#L20
+[1be6]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/downloader.lisp#L67
+[80e3]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/downloader.lisp#L74
+[3d6e]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/engine.lisp#L104
+[02cc]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/engine.lisp#L129
+[4260]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/errors.lisp#L14
+[50d7]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/errors.lisp#L19
+[a7ce]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/output/json.lisp#L113
+[d0f3]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/output/json.lisp#L124
+[9c7a]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/output/json.lisp#L146
+[6ca8]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/output/json.lisp#L20
+[de8d]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/output/typed.lisp#L16
+[d04b]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/request.lisp#L10
+[427f]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/request.lisp#L11
+[ef2c]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/spider.lisp#L24
+[a0d9]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/spider.lisp#L38
+[bed5]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/types.lisp#L8
+[b8a2]: https://github.com/40ants/scrapycl/blob/d58b2be4c3ff879076455bf19e015363b16fd1e1/src/utils.lisp#L82
 [f9c2]: https://github.com/40ants/scrapycl/discussions
 [1e8e]: https://github.com/40ants/scrapycl/issues
 [2490]: https://jsonlines.org/
