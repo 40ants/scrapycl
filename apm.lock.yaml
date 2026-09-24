@@ -1,0 +1,259 @@
+lockfile_version: '1'
+apm_version: 0.31.0
+dependencies:
+- repo_url: 40ants/ai
+  name: common-lisp-skills
+  host: github.com
+  resolved_commit: 7b47a97a0cc2a1341548955668ac99ef45c5610c
+  version: 0.1.1
+  virtual_path: plugins/common-lisp-skills
+  is_virtual: true
+  package_type: skill_bundle
+  deployed_files:
+  - .agents/skills/avoiding-common-lisp-pitfalls
+  - .agents/skills/avoiding-common-lisp-pitfalls/SKILL.md
+  - .agents/skills/avoiding-common-lisp-pitfalls/check-paren-balance.lisp
+  - .agents/skills/clearing-asdf-fasl-cache
+  - .agents/skills/clearing-asdf-fasl-cache/SKILL.md
+  - .agents/skills/clearing-asdf-fasl-cache/clear-fasl-cache.sh
+  - .agents/skills/defining-clos-classes
+  - .agents/skills/defining-clos-classes/SKILL.md
+  - .agents/skills/handling-json-in-common-lisp
+  - .agents/skills/handling-json-in-common-lisp/SKILL.md
+  - .agents/skills/lint-common-lisp
+  - .agents/skills/lint-common-lisp/SKILL.md
+  - .agents/skills/lint-common-lisp/agents/openai.yaml
+  - .agents/skills/logging-with-log4cl
+  - .agents/skills/logging-with-log4cl/SKILL.md
+  - .agents/skills/testing-with-rove
+  - .agents/skills/testing-with-rove/SKILL.md
+  - .agents/skills/using-common-lisp-repl
+  - .agents/skills/using-common-lisp-repl/SKILL.md
+  - .agents/skills/writing-40ants-doc-documentation
+  - .agents/skills/writing-40ants-doc-documentation/SKILL.md
+  - .agents/skills/writing-common-lisp
+  - .agents/skills/writing-common-lisp/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/avoiding-common-lisp-pitfalls/SKILL.md: sha256:ed8cbf3acb2f4cc41e64200a4abc48e70937cdd3264fdff808d1793c70da13af
+    .agents/skills/avoiding-common-lisp-pitfalls/check-paren-balance.lisp: sha256:fc0037a2bc9bf48a4a339042ba6f0d47235efa4815288502ac4babe380595069
+    .agents/skills/clearing-asdf-fasl-cache/SKILL.md: sha256:7f303ee779b8e189deb5b2bf42f22a3f58ed5702ce0c48070714e136ea969e05
+    .agents/skills/clearing-asdf-fasl-cache/clear-fasl-cache.sh: sha256:9c990ad85e8c559f75d0d4435736b317b9486307b2830ec58abb253efd922173
+    .agents/skills/defining-clos-classes/SKILL.md: sha256:a1aad29d97afe52542df293eaf2ad1ffcadf0fc735c86183a40515acaf2f1405
+    .agents/skills/handling-json-in-common-lisp/SKILL.md: sha256:d30a07e0fe19a246a6f3a6f94ef39d555af7c40ff688310615a7bfc45bcb402f
+    .agents/skills/lint-common-lisp/SKILL.md: sha256:5a5c40278cb2d282b74b9db6f7f5a60962ad5e094a11fb3268caf844939dcd3c
+    .agents/skills/lint-common-lisp/agents/openai.yaml: sha256:69cfdbd3aead2f1a3ba737d1665b446fc6c17ecd6e90194c1d2413f76ee106d6
+    .agents/skills/logging-with-log4cl/SKILL.md: sha256:eeb92fd4105be0b20e74532e2cfd1d267541d0c43124753d4e2d7e727b61b9d3
+    .agents/skills/testing-with-rove/SKILL.md: sha256:b0accb237471a61d2b93203ee46ce9f7241b679e3b1e09360e4823e6b9ee6ea7
+    .agents/skills/using-common-lisp-repl/SKILL.md: sha256:168050347e954b4846cfc7678e1f0aed8ded2456406e93997fc98416eb6272e5
+    .agents/skills/writing-40ants-doc-documentation/SKILL.md: sha256:abf7a08a1795d1cefd9daf290582c0d95ecb3c0bfa9b19bdf567a67ecee236d8
+    .agents/skills/writing-common-lisp/SKILL.md: sha256:23885e7aa810373c95bc1ecedcf00799b46adc000373556a3762ecf4e48dd06f
+  content_hash: sha256:dd177bd1b187ccaba188b2f4c76cb26735f5f478aa4db2f41e74d324311a769a
+  declared_license: MIT
+deployments:
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/avoiding-common-lisp-pitfalls
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/avoiding-common-lisp-pitfalls/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:ed8cbf3acb2f4cc41e64200a4abc48e70937cdd3264fdff808d1793c70da13af
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/avoiding-common-lisp-pitfalls/check-paren-balance.lisp
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:fc0037a2bc9bf48a4a339042ba6f0d47235efa4815288502ac4babe380595069
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/clearing-asdf-fasl-cache
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/clearing-asdf-fasl-cache/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:7f303ee779b8e189deb5b2bf42f22a3f58ed5702ce0c48070714e136ea969e05
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/clearing-asdf-fasl-cache/clear-fasl-cache.sh
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:9c990ad85e8c559f75d0d4435736b317b9486307b2830ec58abb253efd922173
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/defining-clos-classes
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/defining-clos-classes/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:a1aad29d97afe52542df293eaf2ad1ffcadf0fc735c86183a40515acaf2f1405
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/handling-json-in-common-lisp
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/handling-json-in-common-lisp/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:d30a07e0fe19a246a6f3a6f94ef39d555af7c40ff688310615a7bfc45bcb402f
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/lint-common-lisp
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/lint-common-lisp/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:5a5c40278cb2d282b74b9db6f7f5a60962ad5e094a11fb3268caf844939dcd3c
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/lint-common-lisp/agents/openai.yaml
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:69cfdbd3aead2f1a3ba737d1665b446fc6c17ecd6e90194c1d2413f76ee106d6
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/logging-with-log4cl
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/logging-with-log4cl/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:eeb92fd4105be0b20e74532e2cfd1d267541d0c43124753d4e2d7e727b61b9d3
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/testing-with-rove
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/testing-with-rove/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:b0accb237471a61d2b93203ee46ce9f7241b679e3b1e09360e4823e6b9ee6ea7
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/using-common-lisp-repl
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/using-common-lisp-repl/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:168050347e954b4846cfc7678e1f0aed8ded2456406e93997fc98416eb6272e5
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/writing-40ants-doc-documentation
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/writing-40ants-doc-documentation/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:abf7a08a1795d1cefd9daf290582c0d95ecb3c0bfa9b19bdf567a67ecee236d8
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/writing-common-lisp
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: null
+- kind: project-relative
+  target: agent-skills
+  value: .agents/skills/writing-common-lisp/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - 40ants/ai/plugins/common-lisp-skills
+  active_owner: 40ants/ai/plugins/common-lisp-skills
+  content_hash: sha256:23885e7aa810373c95bc1ecedcf00799b46adc000373556a3762ecf4e48dd06f
